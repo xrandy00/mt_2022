@@ -1,0 +1,15 @@
+{
+  "name": "js_to_ast",
+  "version": "1.0.0",
+  "description": "Skript, který vstupní JS převede na AST\r 1. prozkoumat existující knihovny",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "acorn": "^8.7.0",
+    "acorn-walk": "^8.2.0"
+  }
+}
