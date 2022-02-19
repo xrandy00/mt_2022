@@ -1,5 +1,5 @@
 const acorn = require("acorn");
-const walk = require("acorn-walk")
+const walk = require("./my_walk")
 
 
 function tryParse(code) {
