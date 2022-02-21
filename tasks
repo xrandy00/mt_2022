@@ -1,4 +1,15 @@
 1. Script to convert AST to PDA accepting that AST
 - 1.1. Custom walker - preorder
-1.2. Alphabet - all possible nodes as states (class constructor)
-1.3. process node = create state in PDA
+- 1.2. Alphabet - all possible nodes as states (class constructor)
+- 1.3. process node = create state in PDA
+
+equality of nodes - what properties matter
+
+2. Unit tests
+2.1. alphabet equality - test that each class equals to other class
+2.2. "e2e test" - scripts in + out combinations
+
+
+3. acceptance
+3.1. source to AST to nodes list
+3.2. iter
