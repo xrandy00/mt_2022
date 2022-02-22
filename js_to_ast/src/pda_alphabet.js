@@ -428,7 +428,7 @@ class VariableDeclarationNode {
             return false;
         }
 
-        return true;
+        return this.node.kind == other.node.kind;
     }
 
 }
@@ -694,7 +694,7 @@ class TemplateElementNode {
             return false;
         }
 
-        return true;
+        return this.node.tail == other.node.tail && this.node.value == other.node.value;
     }
 
 }
@@ -708,7 +708,7 @@ class UnaryExpressionNode {
             return false;
         }
 
-        return true;
+        return this.node.prefix == other.node.prefix;
     }
 
 }
@@ -722,7 +722,7 @@ class UpdateExpressionNode {
             return false;
         }
 
-        return true;
+        return this.node.prefix == other.node.prefix;
     }
 
 }
@@ -820,7 +820,7 @@ class CallExpressionNode {
             return false;
         }
 
-        return true;
+        return this.node.optional == other.node.optional;
     }
 
 }
@@ -834,7 +834,7 @@ class MemberExpressionNode {
             return false;
         }
 
-        return true;
+        return this.node.computed == other.node.computed && this.node.optional == other.node.optional;
     }
 
 }
@@ -960,7 +960,7 @@ class IdentifierNode {
             return false;
         }
 
-        return true;
+        return this.node.name == other.node.name;
     }
 
 }
@@ -974,7 +974,7 @@ class PrivateIdentifierNode {
             return false;
         }
 
-        return true;
+        return this.node.name == other.node.name;
     }
 
 }
@@ -988,7 +988,7 @@ class LiteralNode {
             return false;
         }
 
-        return true;
+        return this.node.value == other.node.value && this.node.raw == other.node.raw && this.node.regex == other.node.regex && this.node.bigint == other.node.bigint;
     }
 
 }
@@ -1072,7 +1072,7 @@ class MethodDefinitionNode {
             return false;
         }
 
-        return true;
+        return this.node.kind == other.node.kind && this.node.computed == other.node.computed && this.node.static == other.node.static;
     }
 
 }
@@ -1086,7 +1086,7 @@ class PropertyDefinitionNode {
             return false;
         }
 
-        return true;
+        return this.node.computed == other.node.computed && this.node.static == other.node.static;
     }
 
 }
@@ -1100,7 +1100,7 @@ class PropertyNode {
             return false;
         }
 
-        return true;
+        return this.node.kind == other.node.kind && this.node.method == other.node.method && this.node.shorthand == other.node.shorthand && this.node.computed == other.node.computed;
     }
 
 }

@@ -211,10 +211,17 @@ test('FunctionDeclarationNode equality', () => {
 });
 
 test('VariableDeclarationNode equality', () => {
-    let first = new pda.VariableDeclarationNode();
-    let second = new pda.VariableDeclarationNode();
+    let first = new pda.VariableDeclarationNode({ kind: 'test' });
+    let second = new pda.VariableDeclarationNode({ kind: 'test' });
 
     expect(first.equals(second)).toBe(true);
+});
+
+test('VariableDeclarationNode equalit false', () => {
+    let first = new pda.VariableDeclarationNode({ kind: 'test' });
+    let second = new pda.VariableDeclarationNode({ kind: 'test 2' });
+
+    expect(first.equals(second)).toBe(false);
 });
 
 test('VariableDeclaratorNode equality', () => {
@@ -344,24 +351,54 @@ test('TemplateLiteralNode equality', () => {
 });
 
 test('TemplateElementNode equality', () => {
-    let first = new pda.TemplateElementNode();
-    let second = new pda.TemplateElementNode();
+    let first = new pda.TemplateElementNode({ tail: 'tail', value: 'value' });
+    let second = new pda.TemplateElementNode({ tail: 'tail', value: 'value' });
 
     expect(first.equals(second)).toBe(true);
 });
 
+test('TemplateElementNode equality false', () => {
+    let first = new pda.TemplateElementNode({ tail: 'tail', value: 'value' });
+    let second = new pda.TemplateElementNode({});
+
+    expect(first.equals(second)).toBe(false);
+});
+
+
+test('TemplateElementNode equality false 2', () => {
+    let first = new pda.TemplateElementNode({ tail: 'tail', value: 'value' });
+    let second = new pda.TemplateElementNode({ tail: 'tail 2', value: 'value' });
+
+    expect(first.equals(second)).toBe(false);
+});
+
+
 test('UnaryExpressionNode equality', () => {
-    let first = new pda.UnaryExpressionNode();
-    let second = new pda.UnaryExpressionNode();
+    let first = new pda.UnaryExpressionNode({ prefix: 'prefix' });
+    let second = new pda.UnaryExpressionNode({ prefix: 'prefix' });
 
     expect(first.equals(second)).toBe(true);
+});
+
+test('UnaryExpressionNode equality false', () => {
+    let first = new pda.UnaryExpressionNode({ prefix: 'prefix' });
+    let second = new pda.UnaryExpressionNode({ prefix: 'prefix 2' });
+
+    expect(first.equals(second)).toBe(false);
 });
 
 test('UpdateExpressionNode equality', () => {
-    let first = new pda.UpdateExpressionNode();
-    let second = new pda.UpdateExpressionNode();
+    let first = new pda.UpdateExpressionNode({ prefix: 'prefix' });
+    let second = new pda.UpdateExpressionNode({ prefix: 'prefix' });
 
     expect(first.equals(second)).toBe(true);
+});
+
+test('UpdateExpressionNode equality false', () => {
+    let first = new pda.UpdateExpressionNode({ prefix: 'prefix' });
+    let second = new pda.UpdateExpressionNode({ prefix: 'prefix 2' });
+
+    expect(first.equals(second)).toBe(false);
 });
 
 test('BinaryExpressionNode equality', () => {
@@ -407,17 +444,32 @@ test('NewExpressionNode equality', () => {
 });
 
 test('CallExpressionNode equality', () => {
-    let first = new pda.CallExpressionNode();
-    let second = new pda.CallExpressionNode();
+    let first = new pda.CallExpressionNode({ optional: 'optional' });
+    let second = new pda.CallExpressionNode({ optional: 'optional' });
 
     expect(first.equals(second)).toBe(true);
 });
 
+test('CallExpressionNode equality false', () => {
+    let first = new pda.CallExpressionNode({ optional: 'optional' });
+    let second = new pda.CallExpressionNode({ optional: 'optional 2' });
+
+    expect(first.equals(second)).toBe(false);
+});
+
+
 test('MemberExpressionNode equality', () => {
-    let first = new pda.MemberExpressionNode();
-    let second = new pda.MemberExpressionNode();
+    let first = new pda.MemberExpressionNode({ computed: 'computed', optional: 'optional' });
+    let second = new pda.MemberExpressionNode({ computed: 'computed', optional: 'optional' });
 
     expect(first.equals(second)).toBe(true);
+});
+
+test('MemberExpressionNode equality false', () => {
+    let first = new pda.MemberExpressionNode({ computed: 'computed', optional: 'optional' });
+    let second = new pda.MemberExpressionNode({ computed: 'computed 2', optional: 'optional 2' });
+
+    expect(first.equals(second)).toBe(false);
 });
 
 test('ExportNamedDeclarationNode equality', () => {
@@ -477,24 +529,45 @@ test('ImportNamespaceSpecifierNode equality', () => {
 });
 
 test('IdentifierNode equality', () => {
-    let first = new pda.IdentifierNode();
-    let second = new pda.IdentifierNode();
+    let first = new pda.IdentifierNode({ name: 'name' });
+    let second = new pda.IdentifierNode({ name: 'name' });
 
     expect(first.equals(second)).toBe(true);
+});
+
+test('IdentifierNode equality false', () => {
+    let first = new pda.IdentifierNode({ name: 'name' });
+    let second = new pda.IdentifierNode({ name: 'name 2' });
+
+    expect(first.equals(second)).toBe(false);
 });
 
 test('PrivateIdentifierNode equality', () => {
-    let first = new pda.PrivateIdentifierNode();
-    let second = new pda.PrivateIdentifierNode();
+    let first = new pda.PrivateIdentifierNode({ name: 'name' });
+    let second = new pda.PrivateIdentifierNode({ name: 'name' });
 
     expect(first.equals(second)).toBe(true);
 });
 
+test('PrivateIdentifierNode equality false', () => {
+    let first = new pda.PrivateIdentifierNode({ name: 'name' });
+    let second = new pda.PrivateIdentifierNode({ name: 'name 2' });
+
+    expect(first.equals(second)).toBe(false);
+});
+
 test('LiteralNode equality', () => {
-    let first = new pda.LiteralNode();
-    let second = new pda.LiteralNode();
+    let first = new pda.LiteralNode({ value: 'value', raw: 'raw', regex: 'reg', bigint: 'big' });
+    let second = new pda.LiteralNode({ value: 'value', raw: 'raw', regex: 'reg', bigint: 'big' });
 
     expect(first.equals(second)).toBe(true);
+});
+
+test('LiteralNode equality false', () => {
+    let first = new pda.LiteralNode({ value: 'value', raw: 'raw', regex: 'reg', bigint: 'big' });
+    let second = new pda.LiteralNode({ value: 'value' });
+
+    expect(first.equals(second)).toBe(false);
 });
 
 test('TaggedTemplateExpressionNode equality', () => {
@@ -533,22 +606,50 @@ test('ClassBodyNode equality', () => {
 });
 
 test('MethodDefinitionNode equality', () => {
-    let first = new pda.MethodDefinitionNode();
-    let second = new pda.MethodDefinitionNode();
+    let first = new pda.MethodDefinitionNode({ kind: 'kind', computed: 'computed', static: 'static' });
+    let second = new pda.MethodDefinitionNode({ kind: 'kind', computed: 'computed', static: 'static' });
 
     expect(first.equals(second)).toBe(true);
+});
+
+test('MethodDefinitionNode equality false', () => {
+    let first = new pda.MethodDefinitionNode({ kind: 'kind', computed: 'computed', static: 'static' });
+    let second = new pda.MethodDefinitionNode({});
+
+    expect(first.equals(second)).toBe(false);
 });
 
 test('PropertyDefinitionNode equality', () => {
-    let first = new pda.PropertyDefinitionNode();
-    let second = new pda.PropertyDefinitionNode();
+    let first = new pda.PropertyDefinitionNode({ computed: 'computed', static: 'static' });
+    let second = new pda.PropertyDefinitionNode({ computed: 'computed', static: 'static' });
 
     expect(first.equals(second)).toBe(true);
 });
 
+test('PropertyDefinitionNode equality false', () => {
+    let first = new pda.PropertyDefinitionNode({ computed: 'computed', static: 'static' });
+    let second = new pda.PropertyDefinitionNode({ computed: 'computed 2', static: 'static' });
+
+    expect(first.equals(second)).toBe(false);
+});
+
 test('PropertyNode equality', () => {
-    let first = new pda.PropertyNode();
-    let second = new pda.PropertyNode();
+    let first = new pda.PropertyNode({ kind: 'kind', method: 'method', shorthand: 'shorthand', computed: 'computed' });
+    let second = new pda.PropertyNode({ kind: 'kind', method: 'method', shorthand: 'shorthand', computed: 'computed' });
 
     expect(first.equals(second)).toBe(true);
+});
+
+test('PropertyNode equality false', () => {
+    let first = new pda.PropertyNode({ kind: 'kind', method: 'method', shorthand: 'shorthand', computed: 'computed' });
+    let second = new pda.PropertyNode({ kind: 'kind 2', method: 'method', shorthand: 'shorthand', computed: 'computed' });
+
+    expect(first.equals(second)).toBe(false);
+});
+
+test('PropertyNode equality false 2', () => {
+    let first = new pda.PropertyNode({ kind: 'kind', method: 'method', shorthand: 'shorthand', computed: 'computed' });
+    let second = new pda.PropertyNode({});
+
+    expect(first.equals(second)).toBe(false);
 });
