@@ -3,12 +3,16 @@ class ProgramNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class BlockStatementNode {
@@ -16,12 +20,16 @@ class BlockStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class StaticBlockNode {
@@ -29,12 +37,16 @@ class StaticBlockNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class StatementNode {
@@ -42,12 +54,16 @@ class StatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class EmptyStatementNode {
@@ -55,12 +71,16 @@ class EmptyStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ExpressionStatementNode {
@@ -68,12 +88,16 @@ class ExpressionStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ParenthesizedExpressionNode {
@@ -81,12 +105,16 @@ class ParenthesizedExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ChainExpressionNode {
@@ -94,12 +122,16 @@ class ChainExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class IfStatementNode {
@@ -107,12 +139,16 @@ class IfStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class LabeledStatementNode {
@@ -120,12 +156,16 @@ class LabeledStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class BreakStatementNode {
@@ -133,12 +173,16 @@ class BreakStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ContinueStatementNode {
@@ -146,12 +190,16 @@ class ContinueStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class WithStatementNode {
@@ -159,12 +207,16 @@ class WithStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class SwitchStatementNode {
@@ -172,12 +224,16 @@ class SwitchStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class SwitchCaseNode {
@@ -185,12 +241,16 @@ class SwitchCaseNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ReturnStatementNode {
@@ -198,12 +258,16 @@ class ReturnStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class YieldExpressionNode {
@@ -211,12 +275,16 @@ class YieldExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class AwaitExpressionNode {
@@ -224,12 +292,16 @@ class AwaitExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ThrowStatementNode {
@@ -237,12 +309,16 @@ class ThrowStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class SpreadElementNode {
@@ -250,12 +326,16 @@ class SpreadElementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class TryStatementNode {
@@ -263,12 +343,16 @@ class TryStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class CatchClauseNode {
@@ -276,12 +360,16 @@ class CatchClauseNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class WhileStatementNode {
@@ -289,12 +377,16 @@ class WhileStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class DoWhileStatementNode {
@@ -302,12 +394,16 @@ class DoWhileStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ForStatementNode {
@@ -315,12 +411,16 @@ class ForStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ForInStatementNode {
@@ -328,12 +428,16 @@ class ForInStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ForOfStatementNode {
@@ -341,12 +445,16 @@ class ForOfStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ForInitNode {
@@ -354,12 +462,16 @@ class ForInitNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class DebuggerStatementNode {
@@ -367,12 +479,16 @@ class DebuggerStatementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class FunctionDeclarationNode {
@@ -380,12 +496,16 @@ class FunctionDeclarationNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class VariableDeclarationNode {
@@ -393,12 +513,16 @@ class VariableDeclarationNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return this.node.kind == other.node.kind;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return this.node.kind == other.node.kind;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class VariableDeclaratorNode {
@@ -406,12 +530,16 @@ class VariableDeclaratorNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class FunctionNode {
@@ -419,12 +547,16 @@ class FunctionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class PatternNode {
@@ -432,12 +564,16 @@ class PatternNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class VariablePatternNode {
@@ -445,12 +581,16 @@ class VariablePatternNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class MemberPatternNode {
@@ -458,12 +598,16 @@ class MemberPatternNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class RestElementNode {
@@ -471,12 +615,16 @@ class RestElementNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ArrayPatternNode {
@@ -484,12 +632,16 @@ class ArrayPatternNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ObjectPatternNode {
@@ -497,12 +649,16 @@ class ObjectPatternNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ExpressionNode {
@@ -510,12 +666,16 @@ class ExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ThisExpressionNode {
@@ -523,12 +683,16 @@ class ThisExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class SuperNode {
@@ -536,12 +700,16 @@ class SuperNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class MetaPropertyNode {
@@ -549,12 +717,16 @@ class MetaPropertyNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ArrayExpressionNode {
@@ -562,12 +734,16 @@ class ArrayExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ObjectExpressionNode {
@@ -575,12 +751,16 @@ class ObjectExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class FunctionExpressionNode {
@@ -588,11 +768,7 @@ class FunctionExpressionNode {
     this.node = node;
   }
 
-  equals(other) {
-    if (typeof other != typeof this) {
-      return false;
-    }
-
+  hasSameProperties(other) {
     return (
       this.node.id == other.node.id &&
       this.node.expression == other.node.expression &&
@@ -600,18 +776,30 @@ class FunctionExpressionNode {
       this.node.async == other.node.async
     );
   }
+
+  equals(other) {
+    if (other.constructor.name != this.constructor.name) {
+      return false;
+    }
+
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
+  }
 }
 class ArrowFunctionExpressionNode {
   constructor(node) {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class SequenceExpressionNode {
@@ -619,12 +807,16 @@ class SequenceExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class TemplateLiteralNode {
@@ -632,12 +824,16 @@ class TemplateLiteralNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class TemplateElementNode {
@@ -645,14 +841,18 @@ class TemplateElementNode {
     this.node = node;
   }
 
-  equals(other) {
-    if (typeof other != typeof this) {
-      return false;
-    }
-
+  hasSameProperties(other) {
     return (
       this.node.tail == other.node.tail && this.node.value == other.node.value
     );
+  }
+
+  equals(other) {
+    if (other.constructor.name != this.constructor.name) {
+      return false;
+    }
+
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class UnaryExpressionNode {
@@ -660,12 +860,16 @@ class UnaryExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return this.node.prefix == other.node.prefix;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return this.node.prefix == other.node.prefix;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class UpdateExpressionNode {
@@ -673,12 +877,16 @@ class UpdateExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return this.node.prefix == other.node.prefix;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return this.node.prefix == other.node.prefix;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class BinaryExpressionNode {
@@ -686,12 +894,16 @@ class BinaryExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class LogicalExpressionNode {
@@ -699,12 +911,16 @@ class LogicalExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class AssignmentExpressionNode {
@@ -712,12 +928,16 @@ class AssignmentExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return this.node.operator == other.node.operator;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return this.node.operator == other.node.operator;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class AssignmentPatternNode {
@@ -725,12 +945,16 @@ class AssignmentPatternNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ConditionalExpressionNode {
@@ -738,12 +962,16 @@ class ConditionalExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class NewExpressionNode {
@@ -751,12 +979,16 @@ class NewExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class CallExpressionNode {
@@ -764,12 +996,16 @@ class CallExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return this.node.optional == other.node.optional;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return this.node.optional == other.node.optional;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class MemberExpressionNode {
@@ -777,15 +1013,19 @@ class MemberExpressionNode {
     this.node = node;
   }
 
-  equals(other) {
-    if (typeof other != typeof this) {
-      return false;
-    }
-
+  hasSameProperties(other) {
     return (
       this.node.computed == other.node.computed &&
       this.node.optional == other.node.optional
     );
+  }
+
+  equals(other) {
+    if (other.constructor.name != this.constructor.name) {
+      return false;
+    }
+
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ExportNamedDeclarationNode {
@@ -793,12 +1033,16 @@ class ExportNamedDeclarationNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ExportDefaultDeclarationNode {
@@ -806,12 +1050,16 @@ class ExportDefaultDeclarationNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ExportAllDeclarationNode {
@@ -819,12 +1067,16 @@ class ExportAllDeclarationNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ImportDeclarationNode {
@@ -832,12 +1084,16 @@ class ImportDeclarationNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ImportExpressionNode {
@@ -845,12 +1101,16 @@ class ImportExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ImportSpecifierNode {
@@ -858,12 +1118,16 @@ class ImportSpecifierNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ImportDefaultSpecifierNode {
@@ -871,12 +1135,16 @@ class ImportDefaultSpecifierNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ImportNamespaceSpecifierNode {
@@ -884,12 +1152,16 @@ class ImportNamespaceSpecifierNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class IdentifierNode {
@@ -897,12 +1169,16 @@ class IdentifierNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return this.node.name == other.node.name;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return this.node.name == other.node.name;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class PrivateIdentifierNode {
@@ -910,12 +1186,16 @@ class PrivateIdentifierNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return this.node.name == other.node.name;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return this.node.name == other.node.name;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class LiteralNode {
@@ -923,11 +1203,7 @@ class LiteralNode {
     this.node = node;
   }
 
-  equals(other) {
-    if (typeof other != typeof this) {
-      return false;
-    }
-
+  hasSameProperties(other) {
     return (
       this.node.value == other.node.value &&
       this.node.raw == other.node.raw &&
@@ -935,18 +1211,30 @@ class LiteralNode {
       this.node.bigint == other.node.bigint
     );
   }
+
+  equals(other) {
+    if (other.constructor.name != this.constructor.name) {
+      return false;
+    }
+
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
+  }
 }
 class TaggedTemplateExpressionNode {
   constructor(node) {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ClassDeclarationNode {
@@ -954,12 +1242,16 @@ class ClassDeclarationNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return this.node.superClass == other.node.superClass;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return this.node.superClass == other.node.superClass;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ClassExpressionNode {
@@ -967,12 +1259,16 @@ class ClassExpressionNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ClassNode {
@@ -980,12 +1276,16 @@ class ClassNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class ClassBodyNode {
@@ -993,12 +1293,16 @@ class ClassBodyNode {
     this.node = node;
   }
 
+  hasSameProperties(other) {
+    return true;
+  }
+
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
-    return true;
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class MethodDefinitionNode {
@@ -1006,16 +1310,20 @@ class MethodDefinitionNode {
     this.node = node;
   }
 
-  equals(other) {
-    if (typeof other != typeof this) {
-      return false;
-    }
-
+  hasSameProperties(other) {
     return (
       this.node.kind == other.node.kind &&
       this.node.computed == other.node.computed &&
       this.node.static == other.node.static
     );
+  }
+
+  equals(other) {
+    if (other.constructor.name != this.constructor.name) {
+      return false;
+    }
+
+    return this.hasSameProperties(other) && other.hasSameProperties(this);
   }
 }
 class PropertyDefinitionNode {
@@ -1024,7 +1332,7 @@ class PropertyDefinitionNode {
   }
 
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 
@@ -1040,7 +1348,7 @@ class PropertyNode {
   }
 
   equals(other) {
-    if (typeof other != typeof this) {
+    if (other.constructor.name != this.constructor.name) {
       return false;
     }
 

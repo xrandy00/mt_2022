@@ -1,27 +1,134 @@
-const sut = require("../src/run");
+const sut = require("../src/parse");
 const pda = require("../src/pda_alphabet");
 
-function compareNodeLists(firstList, secondList) {
-  if (firstList.length != secondList.length) {
-    return false;
-  }
+test("Compare Node Lists", () => {
+  let first = [
+    new pda.ProgramNode({}),
+    new pda.VariableDeclarationNode({ kind: "var" }),
+    new pda.VariableDeclaratorNode({}),
+    new pda.IdentifierNode({ name: "a" }),
+    new pda.LiteralNode({ value: 1, raw: "1" }),
+  ];
+  let second = [
+    new pda.ProgramNode({}),
+    new pda.VariableDeclarationNode({ kind: "var" }),
+    new pda.VariableDeclaratorNode({}),
+    new pda.IdentifierNode({ name: "a" }),
+    new pda.LiteralNode({ value: 1, raw: "1" }),
+  ];
 
-  for (let index = 0; index < firstList.length; index++) {
-    const first = firstList[index];
-    const second = secondList[index];
+  expect(sut.compareNodeLists(first, second)).toBe(true);
+});
 
-    if (first.equals(second) == false) {
-      console.log(first, second);
-      return false;
-    }
-  }
+test("Compare Node Lists, second shorter", () => {
+  let first = [
+    new pda.ProgramNode({}),
+    new pda.VariableDeclarationNode({ kind: "var" }),
+    new pda.VariableDeclaratorNode({}),
+    new pda.IdentifierNode({ name: "a" }),
+    new pda.LiteralNode({ value: 1, raw: "1" }),
+  ];
+  let second = [
+    new pda.ProgramNode({}),
+    new pda.VariableDeclarationNode({ kind: "var" }),
+    new pda.VariableDeclaratorNode({}),
+    new pda.IdentifierNode({ name: "a" }),
+  ];
 
-  return true;
-}
+  expect(sut.compareNodeLists(first, second)).toBe(false);
+});
+
+test("Compare Node Lists, first shorter", () => {
+  let first = [
+    new pda.ProgramNode({}),
+    new pda.VariableDeclarationNode({ kind: "var" }),
+    new pda.VariableDeclaratorNode({}),
+    new pda.IdentifierNode({ name: "a" }),
+  ];
+  let second = [
+    new pda.ProgramNode({}),
+    new pda.VariableDeclarationNode({ kind: "var" }),
+    new pda.VariableDeclaratorNode({}),
+    new pda.IdentifierNode({ name: "a" }),
+    new pda.LiteralNode({ value: 1, raw: "1" }),
+  ];
+
+  expect(sut.compareNodeLists(first, second)).toBe(false);
+});
+
+test("Compare Node Lists, difference ", () => {
+  let first = [
+    new pda.ProgramNode({}),
+    new pda.VariableDeclarationNode({ kind: "var" }),
+    new pda.VariableDeclaratorNode({}),
+    new pda.IdentifierNode({ name: "b" }),
+    new pda.LiteralNode({ value: 1, raw: "1" }),
+  ];
+  let second = [
+    new pda.ProgramNode({}),
+    new pda.VariableDeclarationNode({ kind: "var" }),
+    new pda.VariableDeclaratorNode({}),
+    new pda.IdentifierNode({ name: "a" }),
+    new pda.LiteralNode({ value: 1, raw: "1" }),
+  ];
+
+  expect(sut.compareNodeLists(first, second)).toBe(false);
+});
+
+test("Contains ", () => {
+  expect(
+    sut.contains([new pda.ProgramNode({})], [new pda.ProgramNode({})])
+  ).toBe(true);
+  expect(
+    sut.contains(
+      [
+        new pda.ProgramNode({}),
+        new pda.VariableDeclarationNode({ kind: "var" }),
+        new pda.VariableDeclaratorNode({}),
+        new pda.IdentifierNode({ name: "b" }),
+        new pda.LiteralNode({ value: 1, raw: "1" }),
+      ],
+      [
+        new pda.VariableDeclarationNode({ kind: "var" }),
+        new pda.VariableDeclaratorNode({}),
+        new pda.IdentifierNode({ name: "b" }),
+      ]
+    )
+  ).toBe(true);
+
+  expect(
+    sut.contains(
+      [new pda.ProgramNode({})],
+      [new pda.VariableDeclarationNode({ kind: "var" })]
+    )
+  ).toBe(false);
+  
+  expect(
+    sut.contains(
+      [new pda.ProgramNode({})],
+      [
+        new pda.ProgramNode({}),
+        new pda.VariableDeclarationNode({ kind: "var" }),
+        new pda.VariableDeclarationNode({ kind: "var" }),
+      ]
+    )
+  ).toBe(false);
+  expect(
+    sut.contains(
+      [
+        new pda.VariableDeclarationNode({ kind: "var" }),
+        new pda.VariableDeclaratorNode({}),
+        new pda.IdentifierNode({ name: "b" }),
+        new pda.LiteralNode({ value: 1, raw: "1" }),
+      ],
+      [new pda.ProgramNode({})]
+    )
+  ).toBe(false);
+});
 
 test("Assignment expression", () => {
   let code = "var a = 1;";
-  let actual = sut.run(code);
+  let actual = sut.parse(code);
   let expected = [
     new pda.ProgramNode({}),
     new pda.VariableDeclarationNode({ kind: "var" }),
@@ -30,12 +137,12 @@ test("Assignment expression", () => {
     new pda.LiteralNode({ value: 1, raw: "1" }),
   ];
 
-  expect(compareNodeLists(actual, expected)).toBe(true);
+  expect(sut.compareNodeLists(actual, expected)).toBe(true);
 });
 
 test("Assignment expression, different identifier", () => {
   let code = "var a = 1;";
-  let actual = sut.run(code);
+  let actual = sut.parse(code);
   let expected = [
     new pda.ProgramNode({}),
     new pda.VariableDeclarationNode({ kind: "var" }),
@@ -43,12 +150,12 @@ test("Assignment expression, different identifier", () => {
     new pda.IdentifierNode({ name: "b" }),
     new pda.LiteralNode({ value: 1, raw: "1" }),
   ];
-  expect(compareNodeLists(actual, expected)).toBe(false);
+  expect(sut.compareNodeLists(actual, expected)).toBe(false);
 });
 
 test("Assignment expression, different value", () => {
   let code = "var a = 1;";
-  let actual = sut.run(code);
+  let actual = sut.parse(code);
   let expected = [
     new pda.ProgramNode({}),
     new pda.VariableDeclarationNode({ kind: "var" }),
@@ -56,12 +163,12 @@ test("Assignment expression, different value", () => {
     new pda.IdentifierNode({ name: "a" }),
     new pda.LiteralNode({ value: 2, raw: "1" }),
   ];
-  expect(compareNodeLists(actual, expected)).toBe(false);
+  expect(sut.compareNodeLists(actual, expected)).toBe(false);
 });
 
 test("Assignment expression, different keyword", () => {
   let code = "var a = 1;";
-  let actual = sut.run(code);
+  let actual = sut.parse(code);
   let expected = [
     new pda.ProgramNode({}),
     new pda.VariableDeclarationNode({ kind: "let" }),
@@ -69,12 +176,12 @@ test("Assignment expression, different keyword", () => {
     new pda.IdentifierNode({ name: "a" }),
     new pda.LiteralNode({ value: 1, raw: "1" }),
   ];
-  expect(compareNodeLists(actual, expected)).toBe(false);
+  expect(sut.compareNodeLists(actual, expected)).toBe(false);
 });
 
 test("Class with constructor declaration", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
-  let actual = sut.run(code);
+  let actual = sut.parse(code);
   let expected = [
     new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: null }),
@@ -99,12 +206,12 @@ test("Class with constructor declaration", () => {
     new pda.ThisExpressionNode(),
     new pda.IdentifierNode({ name: "bar" }),
   ];
-  expect(compareNodeLists(actual, expected)).toBe(true);
+  expect(sut.compareNodeLists(actual, expected)).toBe(true);
 });
 
 test("Class with constructor declaration, false", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
-  let actual = sut.run(code);
+  let actual = sut.parse(code);
   let expected = [
     new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: true }),
@@ -129,12 +236,12 @@ test("Class with constructor declaration, false", () => {
     new pda.ThisExpressionNode(),
     new pda.IdentifierNode({ name: "bar" }),
   ];
-  expect(compareNodeLists(actual, expected)).toBe(false);
+  expect(sut.compareNodeLists(actual, expected)).toBe(false);
 });
 
 test("Class with constructor declaration, false", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
-  let actual = sut.run(code);
+  let actual = sut.parse(code);
   let expected = [
     new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: null }),
@@ -159,12 +266,12 @@ test("Class with constructor declaration, false", () => {
     new pda.ThisExpressionNode(),
     new pda.IdentifierNode({ name: "bar" }),
   ];
-  expect(compareNodeLists(actual, expected)).toBe(false);
+  expect(sut.compareNodeLists(actual, expected)).toBe(false);
 });
 
 test("Class with constructor declaration, false", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
-  let actual = sut.run(code);
+  let actual = sut.parse(code);
   let expected = [
     new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: null }),
@@ -189,12 +296,12 @@ test("Class with constructor declaration, false", () => {
     new pda.ThisExpressionNode(),
     new pda.IdentifierNode({ name: "bar" }),
   ];
-  expect(compareNodeLists(actual, expected)).toBe(false);
+  expect(sut.compareNodeLists(actual, expected)).toBe(false);
 });
 
 test("Class with constructor declaration, false", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
-  let actual = sut.run(code);
+  let actual = sut.parse(code);
   let expected = [
     new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: null }),
@@ -219,12 +326,12 @@ test("Class with constructor declaration, false", () => {
     new pda.ThisExpressionNode(),
     new pda.IdentifierNode({ name: "bar" }),
   ];
-  expect(compareNodeLists(actual, expected)).toBe(false);
+  expect(sut.compareNodeLists(actual, expected)).toBe(false);
 });
 
 test("Class with constructor declaration, false", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
-  let actual = sut.run(code);
+  let actual = sut.parse(code);
   let expected = [
     new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: null }),
@@ -249,5 +356,5 @@ test("Class with constructor declaration, false", () => {
     new pda.ThisExpressionNode(),
     new pda.IdentifierNode({ name: "bar" }),
   ];
-  expect(compareNodeLists(actual, expected)).toBe(false);
+  expect(sut.compareNodeLists(actual, expected)).toBe(false);
 });

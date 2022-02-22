@@ -762,3 +762,10 @@ test("PropertyNode equality false 2", () => {
 
   expect(first.equals(second)).toBe(false);
 });
+
+test("Program not equals VariableDeclarator", () => {
+  let first = new pda.VariableDeclaratorNode({});
+  let second = new pda.ProgramNode({});
+
+  expect(first.equals(second)).toBe(false);
+});

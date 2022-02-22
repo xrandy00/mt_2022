@@ -2,7 +2,7 @@ const acorn = require("acorn");
 const walk = require("./my_walk");
 const pda = require("./pda_alphabet");
 
-function run(code) {
+function parse(code) {
   function tryParse(code) {
     try {
       return acorn.parse(code, { ecmaVersion: "latest" });
@@ -263,9 +263,60 @@ function run(code) {
   return list;
 }
 
+function compareNodeLists(firstList, secondList) {
+  if (firstList.length != secondList.length) {
+    return false;
+  }
+
+  for (let index = 0; index < firstList.length; index++) {
+    const first = firstList[index];
+    const second = secondList[index];
+
+    if (first.equals(second) == false) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+// ['a', 'b', 'c', 'd'], ['c', 'd']
+function contains(arr1, arr2) {
+  if (arr1 == null || arr2 == null || arr1.length < arr2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    for (let j = 0; j < arr2.length; j++) {
+      let privateI = i + j;
+      const first = arr1[privateI];
+      const second = arr2[j];
+
+      if (first.equals(second)) {
+        if (j == arr2.length - 1) {
+          return true;
+        }
+        continue;
+      } else {
+        break;
+      }
+    }
+  }
+  return false;
+}
+
 module.exports = {
-  run,
+  parse,
+  compareNodeLists,
+  contains,
 };
 
-var list = run("class Foo {constructor(bar){this.bar = bar;}}");
-// console.log(list);
+contains(
+    [
+      new pda.VariableDeclarationNode({ kind: "var" }),
+      new pda.VariableDeclaratorNode({}),
+      new pda.IdentifierNode({ name: "b" }),
+      new pda.LiteralNode({ value: 1, raw: "1" }),
+    ],
+    [new pda.ProgramNode({})]
+  );
