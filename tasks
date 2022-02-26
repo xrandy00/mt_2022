@@ -10,6 +10,12 @@
 - 2.2. "e2e test" - scripts in + out combinations
 
 
-3. acceptance
-3.1. source to AST to nodes list
-3.2. iter
+- 3. acceptance
+- 3.1. source to AST to nodes list
+- 3.2. iter
+
+
+More advanced tests
+Call from extension
+Patch 
+Minification? Equality of structures?

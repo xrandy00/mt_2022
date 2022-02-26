@@ -19,7 +19,8 @@ function parse(code) {
   walk.full(ast, (node) => {
     switch (node.type) {
       case "Program":
-        list.push(new pda.ProgramNode(node));
+        // Program node is not really needed
+        // list.push(new pda.ProgramNode(node));
         break;
       case "BlockStatement":
         list.push(new pda.BlockStatementNode(node));
@@ -281,6 +282,7 @@ function compareNodeLists(firstList, secondList) {
 }
 
 // ['a', 'b', 'c', 'd'], ['c', 'd']
+// slow - should be optimized
 function contains(arr1, arr2) {
   if (arr1 == null || arr2 == null || arr1.length < arr2.length) {
     return false;
@@ -310,13 +312,3 @@ module.exports = {
   compareNodeLists,
   contains,
 };
-
-contains(
-    [
-      new pda.VariableDeclarationNode({ kind: "var" }),
-      new pda.VariableDeclaratorNode({}),
-      new pda.IdentifierNode({ name: "b" }),
-      new pda.LiteralNode({ value: 1, raw: "1" }),
-    ],
-    [new pda.ProgramNode({})]
-  );

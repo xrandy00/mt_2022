@@ -130,7 +130,6 @@ test("Assignment expression", () => {
   let code = "var a = 1;";
   let actual = sut.parse(code);
   let expected = [
-    new pda.ProgramNode({}),
     new pda.VariableDeclarationNode({ kind: "var" }),
     new pda.VariableDeclaratorNode({}),
     new pda.IdentifierNode({ name: "a" }),
@@ -144,7 +143,6 @@ test("Assignment expression, different identifier", () => {
   let code = "var a = 1;";
   let actual = sut.parse(code);
   let expected = [
-    new pda.ProgramNode({}),
     new pda.VariableDeclarationNode({ kind: "var" }),
     new pda.VariableDeclaratorNode({}),
     new pda.IdentifierNode({ name: "b" }),
@@ -157,7 +155,6 @@ test("Assignment expression, different value", () => {
   let code = "var a = 1;";
   let actual = sut.parse(code);
   let expected = [
-    new pda.ProgramNode({}),
     new pda.VariableDeclarationNode({ kind: "var" }),
     new pda.VariableDeclaratorNode({}),
     new pda.IdentifierNode({ name: "a" }),
@@ -170,7 +167,6 @@ test("Assignment expression, different keyword", () => {
   let code = "var a = 1;";
   let actual = sut.parse(code);
   let expected = [
-    new pda.ProgramNode({}),
     new pda.VariableDeclarationNode({ kind: "let" }),
     new pda.VariableDeclaratorNode({}),
     new pda.IdentifierNode({ name: "a" }),
@@ -183,7 +179,6 @@ test("Class with constructor declaration", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
   let actual = sut.parse(code);
   let expected = [
-    new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: null }),
     new pda.IdentifierNode({ name: "Foo" }),
     new pda.ClassBodyNode(),
@@ -213,7 +208,6 @@ test("Class with constructor declaration, false", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
   let actual = sut.parse(code);
   let expected = [
-    new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: true }),
     new pda.IdentifierNode({ name: "Foo" }),
     new pda.ClassBodyNode(),
@@ -243,7 +237,6 @@ test("Class with constructor declaration, false", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
   let actual = sut.parse(code);
   let expected = [
-    new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: null }),
     new pda.IdentifierNode({ name: "Foo" }),
     new pda.ClassBodyNode(),
@@ -273,7 +266,6 @@ test("Class with constructor declaration, false", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
   let actual = sut.parse(code);
   let expected = [
-    new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: null }),
     new pda.IdentifierNode({ name: "Foob" }),
     new pda.ClassBodyNode(),
@@ -303,7 +295,6 @@ test("Class with constructor declaration, false", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
   let actual = sut.parse(code);
   let expected = [
-    new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: null }),
     new pda.IdentifierNode({ name: "Foo" }),
     new pda.ClassBodyNode(),
@@ -333,7 +324,6 @@ test("Class with constructor declaration, false", () => {
   let code = "class Foo {constructor(bar){this.bar = bar;}}";
   let actual = sut.parse(code);
   let expected = [
-    new pda.ProgramNode({}),
     new pda.ClassDeclarationNode({ superClass: null }),
     new pda.IdentifierNode({ name: "Foo" }),
     new pda.ClassBodyNode(),
