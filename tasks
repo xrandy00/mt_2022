@@ -14,8 +14,27 @@
 - 3.1. source to AST to nodes list
 - 3.2. iter
 
+TODO:
+- 1) vytvorit patterns.json - rucne s nejakou debug chybou
+- 2) "run" script 
+    2.1) nacist "patterns.json" do memory jako seznam objektu [{
+        ast: <Node>[],
+        title: string,
+        description: string,
+        referenceUrl: string,
+        ...
+    }]
+    2.2) zavolat nad vstupem .contains(parse(vstup), patterns)
+    vratit seznam nalezenych chyb - {title, description, referenceUrl }
+    test
+- 5) Patchovani - vratit nejen metadata o chybe, ale i opraveny skript
 
-More advanced tests
-Call from extension
-Patch 
-Minification? Equality of structures?
+
+3) integrace do extensiony - zkusit, ze to najde testovaci chyby
+5.1) integrace opravy do extensiony
+
+4) rozsireni patterns.json - nejak z gitu
+
+6) Minifikace/ekvivalence konstrukcí ve stromu (var a = 1; var b = 2; == var a,b=1,2;) atd
+7) Optimalizace matching algoritmu
+8) Testovani

@@ -1,35 +1,108 @@
-const sut = require("../src/parse");
+const sut = require("../src/finder");
 
-test("Two way script", () => {
-  let script = "var a = 1;";
+test("", () => {
+    const input = `
+    const fs = require("fs");
+    const parse = require("../src/parse");
+    
+    const input = \`console.log("Hello World!");\`;
+    
+    fs.readFile("patterns.json", "utf8", function (err, data) {
+      if (err) {
+        return console.log(err);
+      }
+    
+      const inputAst = parse.parse(input);
+      console.log("Hello World!");
+    
+      const parsedData = JSON.parse(data);
+      parsedData.forEach((vulnerability) => {
+        const vulnerabilityAst = parse.convertJsonToAst(vulnerability.ast);
+    
+        const matched = parse.contains(inputAst, vulnerabilityAst);
+        console.log(matched);
+      });
+    });
+    `;
 
-  expect(sut.contains(sut.parse(script), sut.parse(script))).toBe(true);
+    const data =  [
+        {
+          "title": "Debug Vulnerability",
+          "description": "Initial debug vulnerability, caused by 'console.log('Hello World')'",
+          "reference_url": "https://google.com",
+          "severity": 0,
+          "ast": {
+            "type": "ExpressionStatement",
+            "expression": {
+              "type": "CallExpression",
+              "callee": {
+                "type": "MemberExpression",
+                "object": {
+                  "type": "Identifier",
+                  "name": "console"
+                },
+                "property": {
+                  "type": "Identifier",
+                  "name": "log"
+                },
+                "computed": false,
+                "optional": false
+              },
+              "arguments": [
+                {
+                  "type": "Literal",
+                  "value": "Hello World!",
+                  "raw": "\"Hello World!\""
+                }
+              ],
+              "optional": false
+            }
+          },
+          "patch": {
+            "type": "ExpressionStatement",
+            "expression": {
+              "type": "CallExpression",
+              "callee": {
+                "type": "MemberExpression",
+                "object": {
+                  "type": "Identifier",
+                  "name": "console"
+                },
+                "property": {
+                  "type": "Identifier",
+                  "name": "log"
+                },
+                "computed": false,
+                "optional": false
+              },
+              "arguments": [
+                {
+                  "type": "Literal",
+                  "value": "Hello World Fixed!",
+                  "raw": "\"Hello World Fixed!\""
+                }
+              ],
+              "optional": false
+            }
+          }
+        }
+      ];
+
+    expect(sut.findMatches(input, data)[1]).toBe(
+      `const fs = require('fs');
+const parse = require('../src/parse');
+const input = \`console.log("Hello World!");\`;
+fs.readFile('patterns.json', 'utf8', function (err, data) {
+    if (err) {
+        return console.log(err);
+    }
+    const inputAst = parse.parse(input);
+    console.log('Hello World Fixed!');
+    const parsedData = JSON.parse(data);
+    parsedData.forEach(vulnerability => {
+        const vulnerabilityAst = parse.convertJsonToAst(vulnerability.ast);
+        const matched = parse.contains(inputAst, vulnerabilityAst);
+        console.log(matched);
+    });
+});`);
 });
-
-test("Script contains", () => {
-  let script1 = "var a = 1; var b = 2; var c = 3;";
-  let script2 = "var b = 2;";
-
-  expect(sut.contains(sut.parse(script1), sut.parse(script2))).toBe(true);
-});
-
-test("Script contains with comments", () => {
-  let script1 = 
-  `var fruits = ["Apple", "Banana", "Mango", "Orange", "Papaya"];
-   var subarr = fruits.slice(1, 3);
-   document.write(subarr); // Prints: Banana,Mango
-   // hello
-   var a = 1;`;
-  let script2 = 
-  `document.write(subarr);
-  var a = 1;`;
-
-  expect(sut.contains(sut.parse(script1), sut.parse(script2))).toBe(true);
-});
-
-// test("Minified Script contains", () => {
-//   let script1 = "var a=1,b=2,c=3;";
-//   let script2 = "var b = 2;";
-
-//   expect(sut.contains(sut.parse(script1), sut.parse(script2))).toBe(true);
-// });

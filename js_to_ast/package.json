@@ -9,9 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@mjstahl/stated": "^6.2.0",
     "acorn": "^8.7.0",
-    "acorn-walk": "^8.2.0"
+    "escodegen": "^2.0.0"
   },
   "devDependencies": {
     "jest": "^27.5.1"
