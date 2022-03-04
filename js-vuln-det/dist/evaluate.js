@@ -1,0 +1,1 @@
+(()=>{var __webpack_exports__={};const nodeList=document.querySelectorAll("script");for(let i=0;i<nodeList.length;++i){const node=nodeList[i],ignore=node.getAttribute("ignore");if("true"==ignore)continue;const script=node.innerHTML;script&&eval(script)}})();
