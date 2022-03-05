@@ -145,6 +145,11 @@ const vulnerabilities = [
   }
 ];
 
+
 function processScript(input) {
-  return finder.findMatches(input, vulnerabilities);
+    return finder.findMatches(input, vulnerabilities);
+}
+
+module.exports = {
+  processScript
 }

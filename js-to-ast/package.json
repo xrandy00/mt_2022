@@ -1,8 +1,8 @@
 {
-  "name": "js_to_ast",
+  "name": "js-to-ast",
   "version": "1.0.0",
   "description": "Skript, který vstupní JS převede na AST\r 1. prozkoumat existující knihovny",
-  "main": "run.js",
+  "main": "src/run.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

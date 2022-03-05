@@ -1,1 +1,0 @@
-chrome.runtime.onMessage.addListener((function(e,s,c){e.src?(console.log("processing "+e.src),c("received "+e)):e.script&&(console.log("processing "+e.script),c("received "+e))}));

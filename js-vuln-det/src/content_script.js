@@ -4,11 +4,11 @@ class Mode {
     static Analyze = new Mode("analyze")
     static Block = new Mode("block")
     static Repair = new Mode("repair")
-  
+
     constructor(name) {
-      this.name = name
+        this.name = name
     }
-  }
+}
 function stopLoadingPage() {
     window.stop();
 }
@@ -24,31 +24,48 @@ function processPage(mode) {
     xhr.open('GET', window.location.href, true);
 
     xhr.onerror = function () {
-        document.documentElement.innerHTML = 'Error getting Page';
+        document.documentElement.innerHTML = 'Error getting Page, try desabling the extension and reload the page';
     }
 
-    xhr.onload = function () {
+    xhr.onload = async function () {
         const page = document.implementation.createHTMLDocument("");
         page.documentElement.innerHTML = this.responseText;
 
         const newPage = document.importNode(page.documentElement, true);
 
         const nodeList = newPage.querySelectorAll('script');
+        let processedScriptPromises = [];
+
         for (let i = 0; i < nodeList.length; ++i) {
             const node = nodeList[i];
+
             if (node.src) {
                 node.setAttribute('original-src', node.src);
+                const promise = sendMessagePromise({ src: node.src });
+                processedScriptPromises.push(promise);
 
-                // TODO - save and await all promises
-                chrome.runtime.sendMessage({ src: node.src }, (response) => {
-                    console.log('received user data', response);
-                });
+            } else if (node.innerHTML) {
+                const promise = sendMessagePromise({ script: node.innerHTML });
+                processedScriptPromises.push(promise);
+            }
+        }
+
+        const processedScripts = await Promise.all(processedScriptPromises);
+
+        for (let i = 0; i < processedScripts.length; i++) {
+            const node = nodeList[i];
+            const processedScriptResponse = processedScripts[i];
+
+            console.log(processedScriptResponse);
+            if (processedScriptResponse) {
+                console.log('blocking;');
+                if (mode == Mode.Block) {
+                    node.remove();
+                } else {
+                    node.innerHTML = processedScriptResponse;
+                }
             } else {
-                // TODO - save and await all promises
-                chrome.runtime.sendMessage({ script: node.innerHTML }, (response) => {
-                    // 3. Got an asynchronous response with the data from the background
-                    console.log('received user data', response);
-                });
+                node.setAttribute('ignore', 'true');
             }
         }
 
@@ -56,11 +73,13 @@ function processPage(mode) {
             document.replaceChild(newPage, document.documentElement);
             delete page;
 
-            const s = document.createElement('script');
-            s.src = chrome.runtime.getURL('scripts/evaluate.js');
-            s.setAttribute('ignore', 'true');
-
-            (document.documentElement).appendChild(s);
+            if (mode == Mode.Repair) {
+                const s = document.createElement('script');
+                s.src = chrome.runtime.getURL('evaluate.js');
+                s.setAttribute('ignore', 'true');
+    
+                (document.documentElement).appendChild(s);
+            }
         }
     };
 
@@ -86,7 +105,7 @@ function analyzeAndRepair() {
 
 chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
     let modeString = data.js_vulnerability_detector__mode;
-    const mode = modeString != null ? new Mode(modeString) : new Mode.Repair;
+    const mode = modeString != null ? new Mode(modeString) : Mode.Repair;
     switch (mode.name) {
         case Mode.Disabled.name:
             break;
@@ -103,3 +122,12 @@ chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
             break;
     }
 });
+
+// https://stackoverflow.com/questions/52087734/make-promise-wait-for-a-chrome-runtime-sendmessage
+function sendMessagePromise(data) {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage(data, response => {
+                resolve(response);
+        });
+    });
+}

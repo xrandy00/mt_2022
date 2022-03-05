@@ -59,6 +59,6 @@
         ]
     },
     "dependencies": {
-        "js_to_ast": "file:../js_to_ast"
+        "js-to-ast": "file:../js-to-ast"
     }
 }

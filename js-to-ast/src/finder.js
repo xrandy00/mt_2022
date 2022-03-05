@@ -30,8 +30,8 @@ function tryParse(code) {
   try {
     return acorn.parse(code, { ecmaVersion: "latest" });
   } catch (error) {
-    console.error(error);
-    return error;
+    console.log(error);
+    return false;
   }
 }
 
@@ -49,6 +49,8 @@ function replaceReferencedObj(refObj, newObj) {
 
 function findMatches(input, vulnerabilitiesList) {
   const ast = tryParse(input);
+  if (ast == false) return false;
+
   const foundVulnerabilities = [];
 
   // go over each node
