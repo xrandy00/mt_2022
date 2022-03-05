@@ -1,6 +1,15 @@
+stopLoadingPage();
+showLoading();
+
+chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
+    let modeString = data.js_vulnerability_detector__mode;
+    const mode = modeString != null ? new Mode(modeString) : Mode.Repair;
+    processPage(mode.name);
+});
+
+
 class Mode {
     // Create new instances of the same class as static attributes
-    static Disabled = new Mode("disabled")
     static Analyze = new Mode("analyze")
     static Block = new Mode("block")
     static Repair = new Mode("repair")
@@ -9,6 +18,7 @@ class Mode {
         this.name = name
     }
 }
+
 function stopLoadingPage() {
     window.stop();
 }
@@ -50,84 +60,47 @@ function processPage(mode) {
             }
         }
 
-        const processedScripts = await Promise.all(processedScriptPromises);
-
-        for (let i = 0; i < processedScripts.length; i++) {
-            const node = nodeList[i];
-            const processedScriptResponse = processedScripts[i];
-
-            console.log(processedScriptResponse);
-            if (processedScriptResponse) {
-                console.log('blocking;');
-                if (mode == Mode.Block) {
-                    node.remove();
-                } else {
-                    node.innerHTML = processedScriptResponse;
-                }
-            } else {
-                node.setAttribute('ignore', 'true');
-            }
-        }
-
+        // in analyze mode dont do anything to the scripts
         if (mode != Mode.Analyze) {
-            document.replaceChild(newPage, document.documentElement);
-            delete page;
+            const processedScripts = await Promise.all(processedScriptPromises);
+            console.log(processedScripts);
+            for (let i = 0; i < processedScripts.length; i++) {
+                const node = nodeList[i];
+                const processedScriptResponse = processedScripts[i];
 
-            if (mode == Mode.Repair) {
-                const s = document.createElement('script');
-                s.src = chrome.runtime.getURL('evaluate.js');
-                s.setAttribute('ignore', 'true');
-    
-                (document.documentElement).appendChild(s);
+                if (processedScriptResponse) {
+                    console.log('blocking;');
+                    if (mode == Mode.Block) {
+                        // in Block mode remove scripts with issues found
+                        node.remove();
+                    } else {
+                        // in Repair mode add new repaired content to the node innerHTML
+                        node.innerHTML = processedScriptResponse;
+                    }
+                }
             }
         }
+
+        // add page back to DOM
+        document.replaceChild(newPage, document.documentElement);
+        delete page;
+
+        // add evaluate script, so that it restarts all script execution
+        const s = document.createElement('script');
+        s.src = chrome.runtime.getURL('evaluate.js');
+        s.setAttribute('ignore', 'true');
+
+        (document.documentElement).appendChild(s);
     };
 
     xhr.send();
 }
 
-function analyze() {
-    processPage(Mode.Analyze);
-}
-
-function analyzeAndBlock() {
-    stopLoadingPage();
-    showLoading();
-    processPage(Mode.Block);
-}
-
-function analyzeAndRepair() {
-    stopLoadingPage();
-    showLoading();
-    processPage(Mode.Repair);
-}
-
-
-chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
-    let modeString = data.js_vulnerability_detector__mode;
-    const mode = modeString != null ? new Mode(modeString) : Mode.Repair;
-    switch (mode.name) {
-        case Mode.Disabled.name:
-            break;
-        case Mode.Analyze.name:
-            analyze();
-            break;
-        case Mode.Block.name:
-            analyzeAndBlock();
-            break;
-        case Mode.Repair.name:
-            analyzeAndRepair();
-            break;
-        default:
-            break;
-    }
-});
-
 // https://stackoverflow.com/questions/52087734/make-promise-wait-for-a-chrome-runtime-sendmessage
 function sendMessagePromise(data) {
     return new Promise((resolve, reject) => {
         chrome.runtime.sendMessage(data, response => {
-                resolve(response);
+            resolve(response);
         });
     });
 }
