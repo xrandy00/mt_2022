@@ -1,5 +1,6 @@
 const finder = require("./finder");
 
+// this needs to be from some external source probably
 const vulnerabilities = [
   {
     "title": "Debug Vulnerability",

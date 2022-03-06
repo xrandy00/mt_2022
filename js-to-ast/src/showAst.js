@@ -1,4 +1,4 @@
-// this script shows AST in format neede by patterns.json of given js code
+// helper script to show AST in format needed by finder.js
 
 const walk = require("./my_walk");
 const finder = require("./finder");
