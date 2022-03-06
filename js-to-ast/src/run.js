@@ -3,7 +3,7 @@ const finder = require("./finder");
 const vulnerabilities = [
   {
     "title": "Debug Vulnerability",
-    "description": "Initial debug vulnerability, caused by 'console.log('Hello World')'",
+    "description": "Initial debug vulnerability, caused by 'console.log(\"Hello World!\")'",
     "reference_url": "https://google.com",
     "severity": 0,
     "ast": {

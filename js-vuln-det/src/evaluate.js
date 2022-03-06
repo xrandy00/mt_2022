@@ -1,5 +1,3 @@
-console.log('in new evaluate');
-
 function runScripts(element) {
   var list, scripts, index;
 

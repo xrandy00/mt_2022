@@ -1,13 +1,3 @@
-stopLoadingPage();
-showLoading();
-
-chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
-    let modeString = data.js_vulnerability_detector__mode;
-    const mode = modeString != null ? new Mode(modeString) : Mode.Repair;
-    processPage(mode.name);
-});
-
-
 class Mode {
     // Create new instances of the same class as static attributes
     static Analyze = new Mode("analyze")
@@ -19,6 +9,27 @@ class Mode {
     }
 }
 
+const whitelist = [
+    'google.com', // google itself works, but searching in chrome searchbar is broken - infinite redirects happen
+]
+
+let domain = (new URL(window.location.href));
+domain = domain.hostname.replace('www.', '');
+
+if (whitelist.includes(domain)) {
+    console.log('This page is whitelisted - extension does not work here properly. Extension will act as disabled.');
+} else {
+    stopLoadingPage();
+    showLoading();
+
+    chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
+        let modeString = data.js_vulnerability_detector__mode;
+        const mode = modeString != null ? new Mode(modeString) : Mode.Repair;
+        processPage(mode.name);
+    });
+}
+
+
 function stopLoadingPage() {
     window.stop();
 }
@@ -28,10 +39,9 @@ function showLoading() {
 }
 
 function processPage(mode) {
-    console.log('in process page');
     var xhr = new XMLHttpRequest();
 
-    xhr.open('GET', window.location.href, true);
+    xhr.open('GET', window.location.href, false);
 
     xhr.onerror = function () {
         document.documentElement.innerHTML = 'Error getting Page, try desabling the extension and reload the page';
@@ -50,7 +60,6 @@ function processPage(mode) {
             const node = nodeList[i];
 
             if (node.src) {
-                node.setAttribute('original-src', node.src);
                 const promise = sendMessagePromise({ src: node.src });
                 processedScriptPromises.push(promise);
 
@@ -61,20 +70,19 @@ function processPage(mode) {
         }
 
         // in analyze mode dont do anything to the scripts
-        if (mode != Mode.Analyze) {
+        if (mode != Mode.Analyze.name) {
             const processedScripts = await Promise.all(processedScriptPromises);
-            console.log(processedScripts);
             for (let i = 0; i < processedScripts.length; i++) {
                 const node = nodeList[i];
                 const processedScriptResponse = processedScripts[i];
 
                 if (processedScriptResponse) {
-                    console.log('blocking;');
-                    if (mode == Mode.Block) {
+                    if (mode == Mode.Block.name) {
                         // in Block mode remove scripts with issues found
-                        node.remove();
+                        node.parentNode.removeChild(node);
                     } else {
                         // in Repair mode add new repaired content to the node innerHTML
+                        node.removeAttribute('src');
                         node.innerHTML = processedScriptResponse;
                     }
                 }
