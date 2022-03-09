@@ -5,41 +5,47 @@ chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         try {
             console.log('received script ', request.script != null, request.scr != null);
-
-            if (request.src != null) {
-                makeRequest("GET", request.src).then(
-                    function (script) {
-                        console.log('fetched script ' + script);
-                        let response = jsToAst.processScript(script);
-                        if (response && response.length == 2 && response[0].length > 0) {
-                            sendResponse(response[1]);
-                        } else {
-                            sendResponse(null);
+            if (request.type == "processScript") {
+                if (request.src != null) {
+                    makeRequest("GET", request.src).then(
+                        function (script) {
+                            console.log('fetched script ' + script);
+                            let response = jsToAst.processScript(script);
+                            if (response && response.length == 2 && response[0].length > 0) {
+                                sendResponse(response[1]);
+                            } else {
+                                sendResponse(null);
+                            }
                         }
-                    }
-                ).catch(function (err) {
-                    console.log('could not fetch', err);
-                })
+                    ).catch(function (err) {
+                        console.log('could not fetch', err);
+                    })
 
-                return true;
-            } else if (request.script != null) {
-                let response = jsToAst.processScript(request.script);
-                if (response && response.length == 2 && response[0].length > 0) {
-                    sendResponse(response[1]);
+                    return true;
+                } else if (request.script != null) {
+                    let response = jsToAst.processScript(request.script);
+                    if (response && response.length == 2 && response[0].length > 0) {
+                        sendResponse(response[1]);
+                    } else {
+                        sendResponse(null);
+                    }
+                }
+            } else if (request.type == "result") {
+                if (request.count > 0) {
+                    chrome.action.setBadgeText({ text: request.count.toString() });
                 } else {
-                    sendResponse(null);
-                }            }
+                    chrome.action.setBadgeText({ text: '' });
+                }
+
+                sendResponse(true);
+
+            }
+            sendResponse(true);
         } catch (e) {
             console.log(e);
         }
     }
 );
-
-
-
-// chrome.action.setBadgeBackgroundColor({ color: '#F00' }, () => {
-//     chrome.action.setBadgeText({ text: 'script' });
-// });
 
 // https://stackoverflow.com/questions/48969495/in-javascript-how-do-i-should-i-use-async-await-with-xmlhttprequest
 function makeRequest(method, url) {

@@ -3,7 +3,7 @@
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
 </head>
 
@@ -11,7 +11,9 @@
   <h3>JavaScript Vulnerability Detector</h3>
 
   <form name="modeForm">
-    <p>Select mode</p>
+    <label for="modeForm">Select mode:</label><br>
+    <input type="radio" id="disabled" name="mode" value="disabled">
+    <label for="disabled">Disabled</label><br>
     <input type="radio" id="analyze" name="mode" value="analyze">
     <label for="analyze">Analyze</label><br>
     <input type="radio" id="block" name="mode" value="block">

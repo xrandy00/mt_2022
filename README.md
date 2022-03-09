@@ -25,9 +25,10 @@ Chrome extension application written as Node application using Extension CLI (ht
 
 ### Modes
 Extension runs in three different modes:
-1. Analyze - functionality of the web should be affected only in a minimal way
-2. Block - if a script is considered vulnerable, it is removed from the website, which may break the page
-3. Repair - if a script is considered vulnerable, it is replaced with a fixed version
+0. Disabled - Extension is enabled, but not active.
+1. Analyze - Functionality of the web is not affected. Scripts are asynchronously analyzed without impacting the page.
+2. Block - If a script is considered vulnerable, it is removed from the website, which may break the page.
+3. Repair - If a script is considered vulnerable, it is replaced with a fixed version, if available.
 
 ### Principle
 1. Mode selection - *popup.js* and *popup.html*, currently only for mode selection. Selected mode is stored in *chrome.storage*. In future if will be possible to see metadata of found vulnerabilities. There will also be a notification badge on the icon of the extension, showing the count of found vulnerabilities on current site.
@@ -39,12 +40,18 @@ Extension runs in three different modes:
 ### Whitelist
 During initial testing some pages were broken by the core principles of the extension. A hard-coded whitelist was introduced. If a website is in whitelist, extension takes no action on it. The first whitelisted page was google.com, due to infinite loading that happened when Google search was navigated through Chrome search bar.
 
-## test_web
+## test-web
 Simple website containing an inline script and a script reference via src attribute. Purpose of this web, which will become more complex in future, is to test and verify rest of the tools.
 
 ## Contributing
 No contributing allowed.
 
+## Vulnerabilities
+https://github.com/advisories/GHSA-9q5w-79cv-947m
+https://www.npmjs.com/package/remark-html
+https://github.com/remarkjs/remark-html/commit/b75c9dde582ad87ba498e369c033dc8a350478c1
+
+Possible to use https://astexplorer.net/ or js-to-ast/src/showAst to generate AST + https://www.freeformatter.com/javascript-escape.html#ad-output to esacpe the input
 ## TODO
 There is still lots of work to be done, mainly:
 - [ ] Reporting of found vulnerabilities

@@ -1,8 +1,9 @@
 class Mode {
     // Create new instances of the same class as static attributes
-    static Analyze = new Mode("analyze")
-    static Block = new Mode("block")
-    static Repair = new Mode("repair")
+    static Disabled = new Mode("disabled");
+    static Analyze = new Mode("analyze");
+    static Block = new Mode("block");
+    static Repair = new Mode("repair");
 
     constructor(name) {
         this.name = name
@@ -16,27 +17,34 @@ const whitelist = [
 let domain = (new URL(window.location.href));
 domain = domain.hostname.replace('www.', '');
 
-if (whitelist.includes(domain)) {
-    console.log('This page is whitelisted - extension does not work here properly. Extension will act as disabled.');
-} else {
-    stopLoadingPage();
-    showLoading();
+let whitelisted = whitelist.includes(domain);
 
-    chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
-        let modeString = data.js_vulnerability_detector__mode;
-        const mode = modeString != null ? new Mode(modeString) : Mode.Repair;
-        processPage(mode.name);
-    });
-}
+chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
+    let modeString = data.js_vulnerability_detector__mode;
+    const mode = modeString != null ? new Mode(modeString) : Mode.Repair;
+    switch (mode.name) {
+        case Mode.Disabled.name:
+            break;
+        case Mode.Analyze.name:
+            processPage(Mode.Analyze.name);
+            break;
+        case Mode.Block.name:
+        case Mode.Repair.name:
+            if (whitelisted) {
+                processPage(Mode.Analyze.name);
+            } else {
+                window.stop();
+                document.documentElement.innerHTML = 'Reloading Page...';
+                processPage(mode.name);
+            }
+            break;
+        default:
+            break;
+    }
+});
 
 
-function stopLoadingPage() {
-    window.stop();
-}
 
-function showLoading() {
-    document.documentElement.innerHTML = 'Reloading Page...';
-}
 
 function processPage(mode) {
     var xhr = new XMLHttpRequest();
@@ -60,23 +68,25 @@ function processPage(mode) {
             const node = nodeList[i];
 
             if (node.src) {
-                const promise = sendMessagePromise({ src: node.src });
+                const promise = sendMessagePromise({ src: node.src, type: "processScript" });
                 processedScriptPromises.push(promise);
 
             } else if (node.innerHTML) {
-                const promise = sendMessagePromise({ script: node.innerHTML });
+                const promise = sendMessagePromise({ script: node.innerHTML, type: "processScript" });
                 processedScriptPromises.push(promise);
             }
         }
 
-        // in analyze mode dont do anything to the scripts
-        if (mode != Mode.Analyze.name) {
-            const processedScripts = await Promise.all(processedScriptPromises);
-            for (let i = 0; i < processedScripts.length; i++) {
-                const node = nodeList[i];
-                const processedScriptResponse = processedScripts[i];
+        const processedScripts = await Promise.all(processedScriptPromises);
+        let count = 0;
+        for (let i = 0; i < processedScripts.length; i++) {
+            const node = nodeList[i];
+            const processedScriptResponse = processedScripts[i];
 
-                if (processedScriptResponse) {
+            if (processedScriptResponse) {
+                count++;
+                if (mode != Mode.Analyze.name) {
+                    // in analyze mode dont do anything to the scripts
                     if (mode == Mode.Block.name) {
                         // in Block mode remove scripts with issues found
                         node.parentNode.removeChild(node);
@@ -89,16 +99,22 @@ function processPage(mode) {
             }
         }
 
-        // add page back to DOM
-        document.replaceChild(newPage, document.documentElement);
-        delete page;
+        console.log('found ', count);
+        chrome.runtime.sendMessage({ count: count, type: "result" }, () => { });
 
-        // add evaluate script, so that it restarts all script execution
-        const s = document.createElement('script');
-        s.src = chrome.runtime.getURL('evaluate.js');
-        s.setAttribute('ignore', 'true');
 
-        (document.documentElement).appendChild(s);
+        if (mode != Mode.Analyze.name) {
+            // add page back to DOM
+            document.replaceChild(newPage, document.documentElement);
+            delete page;
+
+            // add evaluate script, so that it restarts all script execution
+            const s = document.createElement('script');
+            s.src = chrome.runtime.getURL('evaluate.js');
+            s.setAttribute('ignore', 'true');
+
+            (document.documentElement).appendChild(s);
+        }
     };
 
     xhr.send();

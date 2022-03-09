@@ -28,7 +28,7 @@ function firstInSecond(a, b) {
 
 function tryParse(code) {
   try {
-    return acorn.parse(code, { ecmaVersion: "latest" });
+    return acorn.parse(code, { ecmaVersion: "latest", sourceType: "module" });
   } catch (error) {
     console.log(error);
     return false;

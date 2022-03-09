@@ -56,6 +56,10 @@
                 "name": "popup",
                 "src": "./src/browser/popup.js"
             }
+        ],
+        "copyAsIs": [
+            "./src/browser/css/style.css"
+
         ]
     },
     "dependencies": {
