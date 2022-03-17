@@ -19,7 +19,7 @@ domain = domain.hostname.replace('www.', '');
 
 let whitelisted = whitelist.includes(domain);
 
-chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
+chrome.storage.sync.get('js_vulnerability_detector__mode', function(data) {
     let modeString = data.js_vulnerability_detector__mode;
     const mode = modeString != null ? new Mode(modeString) : Mode.Repair;
     switch (mode.name) {
@@ -51,11 +51,11 @@ function processPage(mode) {
 
     xhr.open('GET', window.location.href, false);
 
-    xhr.onerror = function () {
+    xhr.onerror = function() {
         document.documentElement.innerHTML = 'Error getting Page, try desabling the extension and reload the page';
     }
 
-    xhr.onload = async function () {
+    xhr.onload = async function() {
         const page = document.implementation.createHTMLDocument("");
         page.documentElement.innerHTML = this.responseText;
 
@@ -79,12 +79,14 @@ function processPage(mode) {
 
         const processedScripts = await Promise.all(processedScriptPromises);
         let count = 0;
+        let vulnerabilities = [];
         for (let i = 0; i < processedScripts.length; i++) {
             const node = nodeList[i];
             const processedScriptResponse = processedScripts[i];
 
             if (processedScriptResponse) {
                 count++;
+                vulnerabilities = vulnerabilities.concat(processedScriptResponse[0]);
                 if (mode != Mode.Analyze.name) {
                     // in analyze mode dont do anything to the scripts
                     if (mode == Mode.Block.name) {
@@ -93,14 +95,13 @@ function processPage(mode) {
                     } else {
                         // in Repair mode add new repaired content to the node innerHTML
                         node.removeAttribute('src');
-                        node.innerHTML = processedScriptResponse;
+                        node.innerHTML = processedScriptResponse[1];
                     }
                 }
             }
         }
 
-        console.log('found ', count);
-        chrome.runtime.sendMessage({ count: count, type: "result" }, () => { });
+        chrome.runtime.sendMessage({ count: count, vulnerabilities: vulnerabilities, url: location.href, type: "result" }, () => {});
 
 
         if (mode != Mode.Analyze.name) {

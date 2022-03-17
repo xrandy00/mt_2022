@@ -54,7 +54,7 @@ https://github.com/remarkjs/remark-html/commit/b75c9dde582ad87ba498e369c033dc8a3
 Possible to use https://astexplorer.net/ or js-to-ast/src/showAst to generate AST + https://www.freeformatter.com/javascript-escape.html#ad-output to esacpe the input
 ## TODO
 There is still lots of work to be done, mainly:
-- [ ] Reporting of found vulnerabilities
+- [x] Reporting of found vulnerabilities
 - [ ] Use real vulnerabilities
 - [ ] Code style - cleanup, optimizations
 - [ ] Minification analysis/support - what is needed to analyze minified code as well? Add support for *equivalence classes* of ASTs. Such as 

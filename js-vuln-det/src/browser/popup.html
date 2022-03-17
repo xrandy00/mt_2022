@@ -1,28 +1,51 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
 </head>
 
 <body>
-  <h3>JavaScript Vulnerability Detector</h3>
+    <h3>JavaScript Vulnerability Detector</h3>
 
-  <form name="modeForm">
-    <label for="modeForm">Select mode:</label><br>
-    <input type="radio" id="disabled" name="mode" value="disabled">
-    <label for="disabled">Disabled</label><br>
-    <input type="radio" id="analyze" name="mode" value="analyze">
-    <label for="analyze">Analyze</label><br>
-    <input type="radio" id="block" name="mode" value="block">
-    <label for="block">Block</label><br>
-    <input type="radio" id="repair" name="mode" value="repair">
-    <label for="repair">Repair</label>
-  </form>
+    <div class="tab">
+        <button class="tablinks" id="historySelectionButton">History</button>
+        <button class="tablinks" id="modeSelectionButton">Mode</button>
+    </div>
 
-  <script src="popup.js"></script>
+    <!-- Tab content -->
+    <div id="Mode" class="tabcontent">
+        <form name="modeForm">
+            <label for="modeForm">Select mode:</label><br>
+            <input type="radio" id="disabled" name="mode" value="disabled">
+            <label for="disabled">Disabled</label><br>
+            <input type="radio" id="analyze" name="mode" value="analyze">
+            <label for="analyze">Analyze</label><br>
+            <input type="radio" id="block" name="mode" value="block">
+            <label for="block">Block</label><br>
+            <input type="radio" id="repair" name="mode" value="repair">
+            <label for="repair">Repair</label>
+        </form>
+    </div>
+
+    <div id="History" class="tabcontent">
+        <h3>History</h3>
+        <div>
+            <label>Total count:</label> <span id="totalCount"></span>
+        </div>
+
+        <button class="button button-red" id="clear">Clear</button>
+
+        <p>Found vulnerabilities:</p>
+
+        <div id="vulnerabilitiesList"></div>
+
+    </div>
+
+
+
+    <script src="popup.js"></script>
 
 </body>
 
