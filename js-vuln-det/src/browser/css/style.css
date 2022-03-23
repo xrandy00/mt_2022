@@ -78,6 +78,10 @@ body {
 
 /* List item */
 
+.vulnerability-item {
+    padding: 4px;
+}
+
 .vulnerability-item-title {
     font-size: medium;
 }

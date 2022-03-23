@@ -69,15 +69,21 @@ function refresh() {
         let parsed = received.vulnerabilities;
         for (let index = 0; index < parsed.length; index++) {
             let vulnerability = parsed[index];
-            let html = vulnerabilityToHtml(vulnerability);
+            let html = vulnerabilityToHtml(vulnerability, index + 1);
             let node = htmlToElement(html);
             list.appendChild(node);
         }
     });
 }
 
-function vulnerabilityToHtml(vulnerability) {
-    return `<div class="vulnerability-item severity-${vulnerability.severity}"><span class="vulnerability-item-title">${vulnerability.title}</span><br><a href="${vulnerability.url}">${vulnerability.url}</a></div>`;
+function vulnerabilityToHtml(vulnerability, index) {
+    return `
+    <div class="vulnerability-item severity-${vulnerability.severity}">
+        <span>${index}) </span>
+        <span class="vulnerability-item-title">${vulnerability.title}</span>
+        <br>
+        <a href="${vulnerability.url}">${vulnerability.url}</a>
+    </div>`;
 }
 
 function htmlToElement(html) {

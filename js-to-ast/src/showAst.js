@@ -3,50 +3,23 @@
 const walk = require("./my_walk");
 const finder = require("./finder");
 
-// TODO - I somehow need to make it that:
-// 1) input is the whole script/file + specify what part of it is the error
+const args = process.argv.slice(2)
 
-const input = `
-  const parsedData = JSON.parse(data);
-`;
+const inputAst = finder.tryParse(args[0]);
+const patchAst = finder.tryParse(args[1]);
 
-const patch = `
-    const parsedData = JSON.stringify(data);
-`;
+const title = args[2];
+const description = args[3];
+const severity = args[4];
+const referenceUrl = args[5];
 
-const inputAst = finder.tryParse(input);
-const patchAst = finder.tryParse(patch);
+if (finder.deepEqual(inputAst, patchAst)) { return; }
 
-walk.full(inputAst, (node) => {
-  delete node.start;
-  delete node.end;
-});
-
-walk.full(patchAst, (node) => {
-  delete node.start;
-  delete node.end;
-});
-
-console.log('finished');
-
-const inputAstBody = inputAst.body;
-const patchAstBody = patchAst.body;
-
-if (inputAstBody.length == 1) {
-  // cool
-  console.log(JSON.stringify(inputAstBody[0]));
-} else {
-  // not cool - what to do?
-  console.log('found multiple declarations in root, not handable yet');
-}
-
-if (patchAstBody.length == 1) {
-  // cool
-  console.log(JSON.stringify(patchAstBody[0]));
-
-} else {
-  // not cool - what to do?
-  console.log('found multiple declarations in root, not handable yet');
-
-}
-
+console.log(JSON.stringify({
+    "title": title,
+    "description": description,
+    "reference_url": referenceUrl,
+    "severity": parseInt(severity),
+    "ast": inputAst,
+    "patch": patchAst,
+}, (k, v) => (k === 'start' || k === 'end' || k === 'sourceType') ? undefined : v));
