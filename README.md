@@ -40,6 +40,8 @@ Extension runs in three different modes:
 ### Whitelist
 During initial testing some pages were broken by the core principles of the extension. A hard-coded whitelist was introduced. If a website is in whitelist, extension takes no action on it. The first whitelisted page was google.com, due to infinite loading that happened when Google search was navigated through Chrome search bar.
 
+Probably not needed anymore - the race condition on load was added, to easier support disabled and analysis modes.
+
 ## test-web
 Simple website containing an inline script and a script reference via src attribute. Purpose of this web, which will become more complex in future, is to test and verify rest of the tools.
 
@@ -47,15 +49,15 @@ Simple website containing an inline script and a script reference via src attrib
 No contributing allowed.
 
 ## Vulnerabilities
-https://github.com/advisories/GHSA-9q5w-79cv-947m
-https://www.npmjs.com/package/remark-html
+https://github.com/advisories/GHSA-9q5w-79cv-947m \
+https://www.npmjs.com/package/remark-html\
 https://github.com/remarkjs/remark-html/commit/b75c9dde582ad87ba498e369c033dc8a350478c1
 
 Possible to use https://astexplorer.net/ or js-to-ast/src/showAst to generate AST + https://www.freeformatter.com/javascript-escape.html#ad-output to esacpe the input
 ## TODO
 There is still lots of work to be done, mainly:
 - [x] Reporting of found vulnerabilities
-- [ ] Use real vulnerabilities
+- [x] Use real vulnerabilities
 - [ ] Code style - cleanup, optimizations
 - [ ] Minification analysis/support - what is needed to analyze minified code as well? Add support for *equivalence classes* of ASTs. Such as 
     
@@ -65,5 +67,11 @@ There is still lots of work to be done, mainly:
         var b = 2;
         ==
         var a=1,b=2;
+This is probably too complex, just add minified builds of libraries (like jQuery) to Vulnerabilities.json
 - [ ] Testing
+
+- [ ] Vulnerabilities.json hosted externally (?)
+- [ ] Manually creating Vulnerabilities.json for all known npm vulnerabilities (== 2k+)
+- [ ] Release extension to store
+- [ ] Performance measurement (?)
 
