@@ -68,6 +68,7 @@ There is still lots of work to be done, mainly:
         ==
         var a=1,b=2;
 This is probably too complex, just add minified builds of libraries (like jQuery) to Vulnerabilities.json
+- [ ] Normalizace - inspire in plagiat detection
 - [ ] Testing
 
 - [ ] Vulnerabilities.json hosted externally (?)

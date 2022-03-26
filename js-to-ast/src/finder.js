@@ -28,7 +28,8 @@ function firstInSecond(a, b) {
 
 function tryParse(code) {
     try {
-        return acorn.parse(code, { ecmaVersion: "latest", sourceType: "module" });
+        let ast = acorn.parse(code, { ecmaVersion: "latest", sourceType: "module" });
+        return normalise(ast);
     } catch (error) {
         console.log(error);
         return false;
@@ -94,6 +95,28 @@ function deepEqual(object1, object2) {
 
 function isObject(object) {
     return object != null && typeof object === 'object';
+}
+
+// TODO - implement normalisation
+function normalise(ast) {
+    walk.simple(ast, {
+        // String quotes
+        Literal(node) {
+            if (node.raw && typeof node.value === 'string')
+
+                if (node.raw.startsWith("\'")) {
+                    node.raw = "\"" + node.raw.substring(1);
+                }
+
+            if (node.raw.endsWith("\'")) {
+                node.raw = node.raw.slice(0, -1) + "\"";
+            }
+        }
+    })
+
+    // Hoisting (?)
+    // variable declaration (?)
+    return ast;
 }
 
 module.exports = {

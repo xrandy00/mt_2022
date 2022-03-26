@@ -10,14 +10,8 @@ class Mode {
     }
 }
 
-const whitelist = [
-    'google.com', // google itself works, but searching in chrome searchbar is broken - infinite redirects happen
-]
-
 let domain = (new URL(window.location.href));
 domain = domain.hostname.replace('www.', '');
-
-let whitelisted = whitelist.includes(domain);
 
 chrome.storage.sync.get('js_vulnerability_detector__mode', function(data) {
     let modeString = data.js_vulnerability_detector__mode;
@@ -30,13 +24,9 @@ chrome.storage.sync.get('js_vulnerability_detector__mode', function(data) {
             break;
         case Mode.Block.name:
         case Mode.Repair.name:
-            if (whitelisted) {
-                processPage(Mode.Analyze.name);
-            } else {
-                window.stop();
-                document.documentElement.innerHTML = 'Reloading Page...';
-                processPage(mode.name);
-            }
+            window.stop();
+            document.documentElement.innerHTML = 'Reloading Page...';
+            processPage(mode.name);
             break;
         default:
             break;
