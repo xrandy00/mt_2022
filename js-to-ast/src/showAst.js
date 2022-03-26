@@ -1,6 +1,5 @@
 // helper script to show AST in format needed by finder.js
 
-const walk = require("./my_walk");
 const finder = require("./finder");
 
 const args = process.argv.slice(2)

@@ -97,25 +97,65 @@ function isObject(object) {
     return object != null && typeof object === 'object';
 }
 
-// TODO - implement normalisation
+function normaliseQuotes(str, quote = "\"") {
+    if (str.startsWith("\'")) {
+        str = quote + str.substring(1);
+    }
+
+    if (str.endsWith("\'")) {
+        str = str.slice(0, -1) + quote;
+    }
+
+    return str;
+}
+
+function normaliseVariableDeclarations(nodeList) {
+    let i = 0;
+
+    while (nodeList.length > 1 && i < nodeList.length - 1) {
+        if (checkTypes(nodeList[i], nodeList[i + 1])) {
+            nodeList[i].declarations = mergeDeclarations(nodeList[i], nodeList[i + 1]);
+            nodeList.splice(i + 1, 1)
+        } else {
+            i++;
+        }
+    }
+
+    return nodeList;
+
+    function checkTypes(node1, node2) {
+        return node1.type == 'VariableDeclaration' && node2.type == 'VariableDeclaration' && node1.kind == node2.kind;
+    }
+
+    function mergeDeclarations(dec1, dec2) {
+        return dec1.declarations.concat(dec2.declarations);
+    }
+}
+
+
+
 function normalise(ast) {
     walk.simple(ast, {
         // String quotes
         Literal(node) {
-            if (node.raw && typeof node.value === 'string')
-
-                if (node.raw.startsWith("\'")) {
-                    node.raw = "\"" + node.raw.substring(1);
-                }
-
-            if (node.raw.endsWith("\'")) {
-                node.raw = node.raw.slice(0, -1) + "\"";
+            if (node.raw && typeof node.value === 'string') {
+                node.raw = normaliseQuotes(node.raw);
             }
+        },
+        // variable declarations
+        Program(node) {
+            node.body = normaliseVariableDeclarations(node.body);
+        },
+        BlockStatement(node) {
+            node.body = normaliseVariableDeclarations(node.body);
+
+        },
+        StaticBlock(node) {
+            node.body = normaliseVariableDeclarations(node.body);
         }
-    })
+    });
 
     // Hoisting (?)
-    // variable declaration (?)
     return ast;
 }
 
