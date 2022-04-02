@@ -12,6 +12,8 @@
     <div class="tab">
         <button class="tablinks" id="historySelectionButton">History</button>
         <button class="tablinks" id="modeSelectionButton">Mode</button>
+        <button class="tablinks" id="webCrawlButton">Web Crawl</button>
+
     </div>
 
     <!-- Tab content -->
@@ -43,6 +45,12 @@
 
     </div>
 
+    <div id="WebCrawl" class="tabcontent">
+        <h3>Crawl sites from top 1Mil sites</h3>
+        Start at: <input type="number" id="startAt"><br>
+        End at: <input type="number" id="endAt"><br>
+        <button class="button button-red" id="crawl">Start crawling</button>
+    </div>
 
 
     <script src="popup.js"></script>

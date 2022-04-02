@@ -86,10 +86,19 @@ body {
     font-size: medium;
 }
 
+.severity-0 {
+    background-color: #ffffff;
+}
+
 .severity-1 {
-    background-color: #ff9999;
+    background-color: #d3d898;
 }
 
 .severity-2 {
-    background-color: #ff3333;
+    background-color: #ce782c;
+}
+
+
+.severity-3 {
+    background-color: #eb1313;
 }

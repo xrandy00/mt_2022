@@ -1,8 +1,10 @@
+import crawl from "./crawl";
+
 function refresh() {
     var rad = document.modeForm.mode;
     var prev = null;
     for (var i = 0; i < rad.length; i++) {
-        rad[i].addEventListener('change', function() {
+        rad[i].addEventListener('change', function () {
             if (this !== prev) {
                 prev = this;
             }
@@ -12,7 +14,7 @@ function refresh() {
 
     var mode = 'repair';
 
-    chrome.storage.sync.get('js_vulnerability_detector__mode', function(data) {
+    chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
         mode = data.js_vulnerability_detector__mode;
         console.log('receiving data ' + mode);
         console.log(mode);
@@ -42,16 +44,28 @@ function refresh() {
 
     document.getElementById("modeSelectionButton").addEventListener("click", (event) => { openTab(event, 'Mode'); });
     document.getElementById("historySelectionButton").addEventListener("click", (event) => { openTab(event, 'History'); });
+    document.getElementById("webCrawlButton").addEventListener("click", (event) => { openTab(event, 'WebCrawl'); });
+
     document.getElementById("historySelectionButton").click();
     document.getElementById("clear").addEventListener("click", (event) => {
-        chrome.storage.local.set({ "count": 0 }, function() {});
-        chrome.storage.local.set({ "vulnerabilities": [] }, function() {});
+        chrome.storage.local.set({ "count": 0 }, function () { });
+        chrome.storage.local.set({ "vulnerabilities": [] }, function () { });
 
         refresh();
     });
 
+    document.getElementById("crawl").addEventListener("click", (event) => {
+        var startAt = document.getElementById("startAt").value;
+        var endAt = document.getElementById("endAt").value;
 
-    chrome.storage.local.get("count", function(received) {
+        if (startAt && endAt) {
+            console.log('crawling', startAt, endAt);
+            crawl(startAt, endAt);
+        }
+    });
+
+
+    chrome.storage.local.get("count", function (received) {
         if (!received.count) {
             received.count = 0;
         }
@@ -61,7 +75,7 @@ function refresh() {
     let list = document.getElementById("vulnerabilitiesList");
     list.innerHTML = null;
 
-    chrome.storage.local.get("vulnerabilities", function(received) {
+    chrome.storage.local.get("vulnerabilities", function (received) {
         if (!received.vulnerabilities) {
             return;
         }
