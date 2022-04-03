@@ -48,7 +48,7 @@ function replaceReferencedObj(refObj, newObj) {
     }
 }
 
-function findMatches(input, vulnerabilitiesList) {
+function findMatches(input, vulnerabilitiesList, patchList) {
     const ast = tryParse(input);
     if (ast == false) return false;
 
@@ -60,7 +60,9 @@ function findMatches(input, vulnerabilitiesList) {
         vulnerabilitiesList.forEach((vulnerability) => {
             // if the node matches vulnerability
             if (firstInSecond(vulnerability.ast, node)) {
-                replaceReferencedObj(node, vulnerability.patch);
+                var patchId = vulnerability.patch;
+                var patch = patchList.find((p) => p.id == patchId);
+                replaceReferencedObj(node, patch);
                 foundVulnerabilities.push(vulnerability);
             }
         });
