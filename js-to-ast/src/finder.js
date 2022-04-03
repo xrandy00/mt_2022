@@ -55,21 +55,19 @@ function findMatches(input, vulnerabilitiesList, patchList) {
 
     const foundVulnerabilities = [];
 
-    // go over each node
+    // // go over each node
     walk.full(ast, (node) => {
         // compute node hash
-        // var nodeHash = hash.MD5(node);
-        // go over each vulnerability
-        vulnerabilitiesList.forEach((vulnerability) => {
-            // if the node matches vulnerability
-            // if (nodeHash == vulnerability.hash)
-            if (firstInSecond(vulnerability.ast, node)) {
-                var patchId = vulnerability.patch;
-                var patch = patchList.find((p) => p.id == patchId);
-                replaceReferencedObj(node, patch.patch);
-                foundVulnerabilities.push(vulnerability);
-            }
-        });
+        var asString = JSON.stringify(node, (k, v) => (k === 'start' || k === 'end' || k === 'sourceType') ? undefined : v);
+        var nodeHash = hash.MD5(asString);
+        var vulnerability = vulnerabilitiesList.find((v) => v.ast == nodeHash);
+
+        if (vulnerability) {
+            var patchId = vulnerability.patch;
+            var patch = patchList.find((p) => p.id == patchId);
+            replaceReferencedObj(node, patch.patch);
+            foundVulnerabilities.push(vulnerability);
+        }
     });
 
     if (foundVulnerabilities.length > 0) {
