@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "acorn": "^8.7.0",
-    "escodegen": "^2.0.0"
+    "escodegen": "^2.0.0",
+    "object-hash": "^3.0.0"
   },
   "devDependencies": {
     "jest": "^27.5.1"

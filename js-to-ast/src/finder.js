@@ -1,5 +1,6 @@
 const escodegen = require("escodegen");
 const acorn = require("acorn");
+const hash = require('object-hash');
 const walk = require("./my_walk");
 
 function firstInSecond(a, b) {
@@ -56,9 +57,12 @@ function findMatches(input, vulnerabilitiesList, patchList) {
 
     // go over each node
     walk.full(ast, (node) => {
+        // compute node hash
+        // var nodeHash = hash.MD5(node);
         // go over each vulnerability
         vulnerabilitiesList.forEach((vulnerability) => {
             // if the node matches vulnerability
+            // if (nodeHash == vulnerability.hash)
             if (firstInSecond(vulnerability.ast, node)) {
                 var patchId = vulnerability.patch;
                 var patch = patchList.find((p) => p.id == patchId);
@@ -164,5 +168,6 @@ function normalise(ast) {
 module.exports = {
     tryParse,
     findMatches,
-    deepEqual
+    deepEqual,
+    hash
 }
