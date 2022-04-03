@@ -66,7 +66,7 @@ function findMatches(input, vulnerabilitiesList, patchList) {
             if (firstInSecond(vulnerability.ast, node)) {
                 var patchId = vulnerability.patch;
                 var patch = patchList.find((p) => p.id == patchId);
-                replaceReferencedObj(node, patch);
+                replaceReferencedObj(node, patch.patch);
                 foundVulnerabilities.push(vulnerability);
             }
         });
