@@ -49,25 +49,31 @@ function replaceReferencedObj(refObj, newObj) {
     }
 }
 
-function findMatches(input, vulnerabilitiesList, patchList) {
+function findMatches(input, vulnerabilities, patches) {
     const ast = tryParse(input);
     if (ast == false) return false;
 
     const foundVulnerabilities = [];
 
-    // // go over each node
-    walk.full(ast, (node) => {
-        // compute node hash
-        var asString = JSON.stringify(node, (k, v) => (k === 'start' || k === 'end' || k === 'sourceType') ? undefined : v);
-        var nodeHash = hash.MD5(asString);
-        var vulnerability = vulnerabilitiesList.find((v) => v.ast == nodeHash);
 
-        if (vulnerability) {
-            var patchId = vulnerability.patch;
-            var patch = patchList.find((p) => p.id == patchId);
-            replaceReferencedObj(node, patch.patch);
-            foundVulnerabilities.push(vulnerability);
+    // go over each node
+    walk.full(ast, (node) => {
+        var type = node.type;
+
+        var vulnerabilitiesForType = vulnerabilities[type];
+        if (vulnerabilitiesForType) {
+            var asString = JSON.stringify(node, (k, v) => (k === 'start' || k === 'end' || k === 'sourceType') ? undefined : v);
+            var nodeHash = hash.MD5(asString);
+
+            var vulnerability = vulnerabilitiesForType[nodeHash];
+
+            if (vulnerability) {
+                var patch = patches[vulnerability.patch];
+                replaceReferencedObj(node, patch);
+                foundVulnerabilities.push(vulnerability);
+            }
         }
+
     });
 
     if (foundVulnerabilities.length > 0) {
