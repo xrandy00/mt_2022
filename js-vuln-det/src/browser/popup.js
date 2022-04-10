@@ -1,9 +1,9 @@
 import crawl from "./crawl";
 
 function refresh() {
-    var rad = document.modeForm.mode;
-    var prev = null;
-    for (var i = 0; i < rad.length; i++) {
+    let rad = document.modeForm.mode;
+    let prev = null;
+    for (let i = 0; i < rad.length; i++) {
         rad[i].addEventListener('change', function () {
             if (this !== prev) {
                 prev = this;
@@ -12,7 +12,7 @@ function refresh() {
         });
     }
 
-    var mode = 'repair';
+    let mode = 'repair';
 
     chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
         mode = data.js_vulnerability_detector__mode;
@@ -23,7 +23,7 @@ function refresh() {
 
     function openTab(evt, tabName) {
         // Declare all variables
-        var i, tabcontent, tablinks;
+        let i, tabcontent, tablinks;
 
         // Get all elements with class="tabcontent" and hide them
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -55,15 +55,14 @@ function refresh() {
     });
 
     document.getElementById("crawl").addEventListener("click", (event) => {
-        var startAt = document.getElementById("startAt").value;
-        var endAt = document.getElementById("endAt").value;
+        let startAt = document.getElementById("startAt").value;
+        let endAt = document.getElementById("endAt").value;
 
         if (startAt && endAt) {
             console.log('crawling', startAt, endAt);
             crawl(startAt, endAt);
         }
     });
-
 
     chrome.storage.local.get("count", function (received) {
         if (!received.count) {
@@ -101,7 +100,7 @@ function vulnerabilityToHtml(vulnerability, index) {
 }
 
 function htmlToElement(html) {
-    var template = document.createElement('template');
+    let template = document.createElement('template');
     html = html.trim(); // Never return a text node of whitespace as the result
     template.innerHTML = html;
     return template.content.firstChild;

@@ -63,10 +63,10 @@ There is still lots of work to be done, mainly:
     
         "Hello World" == 'Hello World' 
 
-        var a = 1;
-        var b = 2;
+        let a = 1;
+        let b = 2;
         ==
-        var a=1,b=2;
+        let a=1,b=2;
 This is probably too complex, just add minified builds of libraries (like jQuery) to Vulnerabilities.json
 - [ ] Normalizace - inspire in plagiat detection
 - [ ] Testing

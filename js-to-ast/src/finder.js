@@ -3,30 +3,6 @@ const acorn = require("acorn");
 const hash = require('object-hash');
 const walk = require("./my_walk");
 
-function firstInSecond(a, b) {
-    if (a === b) return true;
-
-    if (typeof a != "object" || typeof b != "object" || a == null || b == null)
-        return false;
-
-    let keysA = Object.keys(a),
-        keysB = Object.keys(b);
-
-    if (keysA.length > keysB.length) return false;
-
-    for (let key of keysA) {
-        if (!keysB.includes(key)) return false;
-
-        if (typeof a[key] === "function" || typeof b[key] === "function") {
-            if (a[key].toString() != b[key].toString()) return false;
-        } else {
-            if (!firstInSecond(a[key], b[key])) return false;
-        }
-    }
-
-    return true;
-}
-
 function tryParse(code) {
     try {
         let ast = acorn.parse(code, { ecmaVersion: "latest", sourceType: "module" });
@@ -58,22 +34,24 @@ function findMatches(input, vulnerabilities, patches) {
 
     // go over each node
     walk.full(ast, (node) => {
-        var type = node.type;
+        const type = node.type;
 
-        var vulnerabilitiesForType = vulnerabilities[type];
+        const vulnerabilitiesForType = vulnerabilities[type];
         if (vulnerabilitiesForType) {
-            var asString = JSON.stringify(node, (k, v) => (k === 'start' || k === 'end' || k === 'sourceType') ? undefined : v);
-            var nodeHash = hash.MD5(asString);
+            const asString = JSON.stringify(node, (k, v) => (k === 'start' || k === 'end' || k === 'sourceType') ? undefined : v);
+            const nodeHash = hash.MD5(asString);
 
-            var vulnerability = vulnerabilitiesForType[nodeHash];
+            const vulnerability = vulnerabilitiesForType[nodeHash];
 
             if (vulnerability) {
-                var patch = patches[vulnerability.patch];
-                replaceReferencedObj(node, patch);
+                // for crawling purpose - do not patch
+                // const patch = patches[vulnerability.patch];
+                // if (patch != null) {
+                //     replaceReferencedObj(node, patch);
+                // } 
                 foundVulnerabilities.push(vulnerability);
             }
         }
-
     });
 
     if (foundVulnerabilities.length > 0) {
@@ -141,8 +119,6 @@ function normaliseVariableDeclarations(nodeList) {
         return dec1.declarations.concat(dec2.declarations);
     }
 }
-
-
 
 function normalise(ast) {
     walk.simple(ast, {

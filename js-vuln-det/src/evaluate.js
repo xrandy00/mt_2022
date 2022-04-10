@@ -1,5 +1,5 @@
 function runScripts(element) {
-  var list, scripts, index;
+  let list, scripts, index;
 
   // Get the scripts
   list = element.getElementsByTagName("script");
@@ -18,7 +18,7 @@ function runScripts(element) {
   continueLoading();
 
   function continueLoading() {
-    var script, newscript;
+    let script, newscript;
 
     // While we have a script to load...
     while (scripts.length) {

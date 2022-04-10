@@ -86,19 +86,18 @@ body {
     font-size: medium;
 }
 
-.severity-0 {
-    background-color: #ffffff;
+.severity-4 {
+    background-color: #ffffffac;
 }
 
-.severity-1 {
-    background-color: #d3d898;
+.severity-3 {
+    background-color: #d3d898a5;
 }
 
 .severity-2 {
-    background-color: #ce782c;
+    background-color: #ce782c93;
 }
 
-
-.severity-3 {
-    background-color: #eb1313;
+.severity-1 {
+    background-color: #eb131364;
 }

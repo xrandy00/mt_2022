@@ -17,15 +17,15 @@ test("String quotes normalisation", () => {
 
 test("Variable declaration merging", () => {
     const input1 = `
-    var a;
-    var b;
-    var c = 1;
-    var g;
+    let a;
+    let b;
+    let c = 1;
+    let g;
     const d = 2;
     const e = 3;
-    var f = 2;`;
+    let f = 2;`;
 
-    const input2 = `var a,b,c=1,g;const d=2,e=3;var f=2;`;
+    const input2 = `let a,b,c=1,g;const d=2,e=3;let f=2;`;
 
     let parsed1 = sut.tryParse(input1);
     let parsed2 = sut.tryParse(input2);

@@ -27,7 +27,7 @@ test("", () => {
     `;
 
 
-  var result = sut.findMatches(input, run.vulnerabilities, run.patches);
+  let result = sut.findMatches(input, run.vulnerabilities, run.patches);
   expect(result[0][0].title).toBe("Debug Vulnerability");
 });
 

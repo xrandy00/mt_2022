@@ -3,10 +3,11 @@ import sites from "./sites_list";
 async function crawl(startAt = 0, endAt = 100) {
     if (endAt > sites.length) return;
     if (startAt < 0) return;
+    let startTime = performance.now();
 
     console.log('starting crawl', startTime);
-    var sitesToCrawl = sites.slice(startAt, endAt);
-    var promiseResolve, promiseReject;
+    let sitesToCrawl = sites.slice(startAt, endAt);
+    let promiseResolve, promiseReject;
 
     chrome.tabs.onUpdated.addListener(function (tabId, info) {
         if (info.status === 'complete') {
@@ -17,9 +18,8 @@ async function crawl(startAt = 0, endAt = 100) {
 
     for (let i = 0; i < sitesToCrawl.length; i++) {
         const site = sitesToCrawl[i];
-        var startTime = performance.now();
 
-        var promise = new Promise(function (resolve, reject) {
+        let promise = new Promise(function (resolve, reject) {
             promiseResolve = resolve;
             promiseReject = reject;
 
@@ -33,9 +33,11 @@ async function crawl(startAt = 0, endAt = 100) {
         });
 
         await promise;
-        var endTime = performance.now()
-        console.log(`Site ${site} took ${endTime - startTime} milliseconds`);
+        let endTime = performance.now()
     }
+    let endTime = performance.now()
+
+    console.log(`Overall startAt: ${startAt} endAt: ${endAt}, count: ${endAt - startAt}, took ${endTime - startTime} milliseconds`);
 }
 
 export default crawl;

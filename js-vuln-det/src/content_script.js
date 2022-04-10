@@ -37,7 +37,7 @@ chrome.storage.sync.get('js_vulnerability_detector__mode', function(data) {
 
 
 function processPage(mode) {
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
 
     xhr.open('GET', window.location.href, false);
 
