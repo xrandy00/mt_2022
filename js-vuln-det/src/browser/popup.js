@@ -106,4 +106,8 @@ function htmlToElement(html) {
     return template.content.firstChild;
 }
 
-refresh();
+try {
+    refresh();
+} catch (error) {
+    console.log(error);
+}

@@ -59,7 +59,7 @@ There is still lots of work to be done, mainly:
 - [x] Reporting of found vulnerabilities
 - [x] Use real vulnerabilities
 - [ ] Code style - cleanup, optimizations
-- [ ] Minification analysis/support - what is needed to analyze minified code as well? Add support for *equivalence classes* of ASTs. Such as 
+- [x] Minification analysis/support - what is needed to analyze minified code as well? Add support for *equivalence classes* of ASTs. Such as 
     
         "Hello World" == 'Hello World' 
 
@@ -68,11 +68,9 @@ There is still lots of work to be done, mainly:
         ==
         let a=1,b=2;
 This is probably too complex, just add minified builds of libraries (like jQuery) to Vulnerabilities.json
-- [ ] Normalizace - inspire in plagiat detection
+- [x] Normalizace - inspire in plagiat detection
 - [ ] Testing
-
-- [ ] Vulnerabilities.json hosted externally (?)
 - [ ] Manually creating Vulnerabilities.json for all known npm vulnerabilities (== 2k+)
 - [ ] Release extension to store
-- [ ] Performance measurement (?)
+- [x] Performance measurement
 

@@ -12,11 +12,11 @@ async function crawl(startAt = 0, endAt = 100) {
     chrome.tabs.onUpdated.addListener(function (tabId, info) {
         if (info.status === 'complete') {
             promiseResolve();
-            console.log('resolved');
         }
     });
 
     for (let i = 0; i < sitesToCrawl.length; i++) {
+        console.log(i);
         const site = sitesToCrawl[i];
 
         let promise = new Promise(function (resolve, reject) {
@@ -33,7 +33,6 @@ async function crawl(startAt = 0, endAt = 100) {
         });
 
         await promise;
-        let endTime = performance.now()
     }
     let endTime = performance.now()
 

@@ -1,6 +1,7 @@
 const escodegen = require("escodegen");
 const acorn = require("acorn");
-const hash = require('object-hash');
+const crypto = require('crypto-js');
+
 const walk = require("./my_walk");
 
 function tryParse(code) {
@@ -13,22 +14,9 @@ function tryParse(code) {
     }
 }
 
-// https://stackoverflow.com/questions/17382427/are-there-pointers-in-javascript/17382443#17382443
-function replaceReferencedObj(refObj, newObj) {
-    let keysR = Object.keys(refObj);
-    let keysN = Object.keys(newObj);
-    for (let i = 0; i < keysR.length; i++) {
-        delete refObj[keysR[i]];
-    }
-    for (let i = 0; i < keysN.length; i++) {
-        refObj[keysN[i]] = newObj[keysN[i]];
-    }
-}
-
 function findMatches(input, vulnerabilities, patches) {
     const ast = tryParse(input);
     if (ast == false) return false;
-
     const foundVulnerabilities = [];
 
 
@@ -39,7 +27,7 @@ function findMatches(input, vulnerabilities, patches) {
         const vulnerabilitiesForType = vulnerabilities[type];
         if (vulnerabilitiesForType) {
             const asString = JSON.stringify(node, (k, v) => (k === 'start' || k === 'end' || k === 'sourceType') ? undefined : v);
-            const nodeHash = hash.MD5(asString);
+            const nodeHash = crypto.MD5(asString);
 
             const vulnerability = vulnerabilitiesForType[nodeHash];
 
@@ -149,5 +137,5 @@ module.exports = {
     tryParse,
     findMatches,
     deepEqual,
-    hash
+    crypto
 }

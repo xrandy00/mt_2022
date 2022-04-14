@@ -84,4 +84,9 @@ function runScripts(element) {
     }
   }
 }
-runScripts(document.documentElement);
+
+try {
+  runScripts(document.documentElement);
+} catch (error) {
+  console.log(error);
+}

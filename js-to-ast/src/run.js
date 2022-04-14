@@ -621,7 +621,11 @@ patches["6"] = { "id": "c01f42fee37ff03fb125a27e199c5830", "patch": { "type": "P
 
 
 function processScript(input) {
-    return finder.findMatches(input, vulnerabilities, patches);
+    try {
+        return finder.findMatches(input, vulnerabilities, patches);
+    } catch {
+        return null;
+    }
 }
 
 module.exports = {
