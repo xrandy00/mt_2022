@@ -14,11 +14,10 @@ function tryParse(code) {
     }
 }
 
-function findMatches(input, vulnerabilities, patches) {
+function findMatches(input, vulnerabilities, patches, meta) {
     const ast = tryParse(input);
     if (ast == false) return false;
     const foundVulnerabilities = [];
-
 
     // go over each node
     walk.full(ast, (node) => {
@@ -32,12 +31,12 @@ function findMatches(input, vulnerabilities, patches) {
             const vulnerability = vulnerabilitiesForType[nodeHash];
 
             if (vulnerability) {
-                // for crawling purpose - do not patch
-                // const patch = patches[vulnerability.patch];
-                // if (patch != null) {
-                //     replaceReferencedObj(node, patch);
-                // } 
-                foundVulnerabilities.push(vulnerability);
+                const patch = patches[vulnerability.patch];
+                if (patch != null) {
+                    replaceReferencedObj(node, patch);
+                } 
+                
+                foundVulnerabilities.push(meta[vulnerability.id]);
             }
         }
     });

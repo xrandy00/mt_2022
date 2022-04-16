@@ -74,23 +74,13 @@ function addToTotalCount(count) {
 function addToHistory(vulnerabilities, url) {
     try {
         chrome.storage.local.get("vulnerabilities", function (received) {
-            let mapped = vulnerabilities.map((x) => {
-                return {
-                    "reference_url": x["reference_url"],
-                    "url": url,
-                    "title": x["title"],
-                    "severity": x["severity"],
-                };
-            });
-
             if (!received.vulnerabilities) {
-                chrome.storage.local.set({ "vulnerabilities": mapped }, function () { });
+                chrome.storage.local.set({ "vulnerabilities": vulnerabilities }, function () { });
                 return;
             }
 
-            // let parsed = JSON.parse(received.vulnerabilities);
             let parsed = received.vulnerabilities;
-            let combined = parsed.concat(mapped);
+            let combined = parsed.concat(vulnerabilities);
             chrome.storage.local.set({ "vulnerabilities": combined }, function () { });
         });
 

@@ -76,7 +76,12 @@ function processPage(mode) {
 
             if (processedScriptResponse) {
                 count++;
-                vulnerabilities = vulnerabilities.concat(processedScriptResponse[0]);
+                for (let i = 0; i < processedScriptResponse[0].length; i++) {
+                    const vuln = processedScriptResponse[0][i];
+                    vuln.src = `${node.src} ${i}` ?? `inline script ${i}`;    
+                    vulnerabilities.push(vuln);                
+                }
+
                 if (mode != Mode.Analyze.name) {
                     // in analyze mode dont do anything to the scripts
                     if (mode == Mode.Block.name) {
