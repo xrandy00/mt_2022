@@ -2,7 +2,7 @@ const jsToAst = require('js-to-ast');
 
 
 chrome.runtime.onMessage.addListener(
-    async function (request, sender, sendResponse) {
+    function (request, sender, sendResponse) {
         try {
             if (request.type == "processScript") {
                 if (request.src != null) {
@@ -19,6 +19,7 @@ chrome.runtime.onMessage.addListener(
                 } else
                     if (request.script != null) {
                         let response = jsToAst.processScript(request.script);
+
                         if (response && response.length == 2 && response[0]?.length > 0) {
                             sendResponse(response);
                         } else {

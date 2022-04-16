@@ -17,6 +17,7 @@ async function crawl(startAt = 0, endAt = 100) {
 
     for (let i = 0; i < sitesToCrawl.length; i++) {
         console.log(i);
+        document.getElementById('crawlCount').innerText = i;
         const site = sitesToCrawl[i];
 
         let promise = new Promise(function (resolve, reject) {

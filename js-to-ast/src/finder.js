@@ -27,7 +27,7 @@ function findMatches(input, vulnerabilities, patches) {
         const vulnerabilitiesForType = vulnerabilities[type];
         if (vulnerabilitiesForType) {
             const asString = JSON.stringify(node, (k, v) => (k === 'start' || k === 'end' || k === 'sourceType') ? undefined : v);
-            const nodeHash = crypto.MD5(asString);
+            const nodeHash = crypto.SHA1(asString);
 
             const vulnerability = vulnerabilitiesForType[nodeHash];
 

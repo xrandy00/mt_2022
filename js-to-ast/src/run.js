@@ -3,52 +3,32 @@ const finder = require("./finder");
 const vulnerabilities = require('./generated_vulnerabilities.json')
 const patches = require('./generated_patches.json')
 
-
-// if (!vulnerabilities["ExpressionStatement"]) { vulnerabilities["ExpressionStatement"] = {} };
-// vulnerabilities["ExpressionStatement"]["47e22f30b29c0de02bc6ff808e6105ff"] = {
-//     "title": "Debug Vulnerability",
-//     "description": "Initial debug vulnerability, caused by 'console.log(\"Hello World!\")'",
-//     "reference_url": "https://google.com",
-//     "severity": 0,
-//     "patch": null,
-
-// };
-
-// if (!vulnerabilities["VariableDeclaration"]) { vulnerabilities["VariableDeclaration"] = {} };
-// vulnerabilities["VariableDeclaration"]["a176d38848d2fbeff55dee4731910452"] = {
-//     "title": "Debug Vulnerability 2",
-//     "description": "Initial debug vulnerability, caused by 'const parsedData = JSON.parse(data)'",
-//     "reference_url": "https://google.com",
-//     "severity": 1,
-//     "patch": null,
-// };
-
 if (!vulnerabilities["Literal"]) { vulnerabilities["Literal"] = {} };
-vulnerabilities["Literal"]["51abcac6495b7eafde220e9b91f2b77b"] = {
+vulnerabilities["Literal"]["db7383b991dfba6eacc2fef99ddcf52e7c4834bd"] = {
     "title": "Cross-Site Scripting in jquery < 1.9.0",
     "description": "Regex leading to XSS is replaced for not vulnerable regex https://github.com/jquery/jquery/commit/05531fc4080ae24070930d15ae0cea7ae056457d",
     "reference_url": "https://github.com/advisories/GHSA-2pqj-h3vj-pqgw",
     "severity": 2,
-    "patch": "3",
+    "patch": "4f8df2f6113fc55ac56e9db43f0ee240",
 };
 
-vulnerabilities["Literal"]["8ec7a7037fe360e3cb82ceb3a5511ad2"] = {
+vulnerabilities["Literal"]["b2d9ed949a390ecfe2150e5232ed09d12bff399d"] = {
     "title": "Cross-Site Scripting in jquery < 1.9.0",
     "description": "Regex leading to XSS is replaced for not vulnerable regex https://github.com/jquery/jquery/commit/f71a6ec6cfe3f748a939eaa109e92b8a9bdac6cc",
     "reference_url": "https://github.com/advisories/GHSA-2pqj-h3vj-pqgw",
     "severity": 2,
-    "patch": "3",
+    "patch": "4f8df2f6113fc55ac56e9db43f0ee240",
 };
 
-vulnerabilities["Literal"]["c66be91ed8b3e9e8bb25807ce2d11767"] = {
+vulnerabilities["Literal"]["7ae1c57c069a8cefcc1129dec38ba0737bb08633"] = {
     "title": "Cross-Site Scripting in jquery < 1.9.0",
     "description": "Regex leading to XSS is replaced for not vulnerable regex https://github.com/jquery/jquery/commit/0877d424e08d57e6f0d1da9a86289fb10d0ee136",
     "reference_url": "https://github.com/advisories/GHSA-2pqj-h3vj-pqgw",
     "severity": 2,
-    "patch": "3",
+    "patch": "4f8df2f6113fc55ac56e9db43f0ee240",
 };
 
-vulnerabilities["Literal"]["cda0e636ff562bb13802bf3ba48a0a6f"] = {
+vulnerabilities["Literal"]["4f01a926f122ce680ae19ac416ceb8d64f773cce"] = {
     "title": "Potential XSS vulnerability in jQuery < 3.5.0",
     "description": "Not fixable",
     "reference_url": "https://github.com/advisories/GHSA-gxr4-xjj5-5px2",
@@ -56,89 +36,33 @@ vulnerabilities["Literal"]["cda0e636ff562bb13802bf3ba48a0a6f"] = {
     "patch": null,
 };
 
-vulnerabilities["Literal"]["faec943064ea265a0bb9c289b213108c"] = {
+vulnerabilities["Literal"]["e8e907ce5d18209c9c4a1f032503b7f2b6269bdc"] = {
     "title": "Regular Expression Denial of Service (ReDoS) in lodash",
     "description": "lodash prior to 4.7.11 is affected by: CWE-400: Uncontrolled Resource Consumption. The impact is: Denial of service. The component is: Date handler. The attack vector is: Attacker provides very long strings, which the library attempts to match using a regular expression. The fixed version is: 4.7.11.",
     "reference_url": "https://github.com/advisories/GHSA-x5rq-j2xg-h7qm",
     "severity": 3,
-    "patch": "5",
+    "patch": "5c8cef7506ef500b0a0ad03e752d5901b91777f2",
 };
 
-vulnerabilities["Literal"]["fc18cfb8cb0057669897f6246280f509"] = {
+vulnerabilities["Literal"]["8ab27866a78cb90b217c8fbf55f45937cb605f65"] = {
     "title": "Regular Expression Denial of Service in moment",
     "description": "Affected versions of moment are vulnerable to a low severity regular expression denial of service when parsing dates as strings.",
     "reference_url": "https://github.com/advisories/GHSA-446m-mv8f-q348",
     "severity": 2,
-    "patch": "6",
+    "patch": "882742bd8a389619b1df44176377133edad5e327",
 };
 
 if (!vulnerabilities["ForStatement"]) { vulnerabilities["ForStatement"] = {} };
-vulnerabilities["ForStatement"]["17c2d6f19df654abd4e15bb962bcbce0"] = {
+vulnerabilities["ForStatement"]["3f0157fc66c024972ab5dd1443838f9eaf0e67a0"] = {
     "title": "XSS in jQuery <3.4.0 as used in Drupal, Backdrop CMS, and other products",
     "description": "jQuery before 3.4.0, as used in Drupal, Backdrop CMS, and other products, mishandles jQuery.extend(true, {}, ...) because of Object.prototype pollution",
     "reference_url": "https://github.com/advisories/GHSA-6c3j-c64m-qhgq",
     "severity": 2,
-    "patch": "4",
+    "patch": "4cb7c87adf6cb47d361956495b491353bbc89580",
 };
 
-patches["1"] = {
-    "type": "ExpressionStatement",
-    "expression": {
-        "type": "CallExpression",
-        "callee": {
-            "type": "MemberExpression",
-            "object": {
-                "type": "Identifier",
-                "name": "console"
-            },
-            "property": {
-                "type": "Identifier",
-                "name": "log"
-            },
-            "computed": false,
-            "optional": false
-        },
-        "arguments": [{
-            "type": "Literal",
-            "value": "Hello World Fixed!",
-            "raw": "\"Hello World Fixed!\""
-        }],
-        "optional": false
-    }
-};
-patches["2"] = {
-    "type": "VariableDeclaration",
-    "declarations": [{
-        "type": "VariableDeclarator",
-        "id": {
-            "type": "Identifier",
-            "name": "parsedData"
-        },
-        "init": {
-            "type": "CallExpression",
-            "callee": {
-                "type": "MemberExpression",
-                "object": {
-                    "type": "Identifier",
-                    "name": "JSON"
-                },
-                "property": {
-                    "type": "Identifier",
-                    "name": "stringify"
-                },
-                "computed": false,
-                "optional": false
-            },
-            "arguments": [{
-                "type": "Identifier",
-                "name": "data"
-            }],
-            "optional": false
-        }
-    }],
-    "kind": "const"
-};
-patches["3"] = {
+
+patches["4f8df2f6113fc55ac56e9db43f0ee240"] = {
     "type": "Literal",
     "value": {},
     "raw": "/^(?:(<[\\w\\W]+>)[^>]*|#([\\w-]*))$/",
@@ -147,7 +71,7 @@ patches["3"] = {
         "flags": ""
     }
 };
-patches["4"] = {
+patches["4cb7c87adf6cb47d361956495b491353bbc895804"] = {
     "type": "ForStatement",
     "init": null,
     "test": {
@@ -607,16 +531,11 @@ patches["4"] = {
         }]
     }
 };
-patches["5"] =
+patches["5c8cef7506ef500b0a0ad03e752d5901b91777f2"] =
 {
-    "id": "03e003bea5480d4d7b69b376727e51ad", "patch": {
-        "type": "Program", "body": [{
-            "type": "ExpressionStatement",
-            "expression": { "type": "Literal", "value": {}, "raw": "/[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/", "regex": { "pattern": "[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]", "flags": "" } }
-        }]
-    }
+    "type": "Literal", "value": {}, "raw": "/[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/", "regex": { "pattern": "[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]", "flags": "" }
 };
-patches["6"] = { "id": "c01f42fee37ff03fb125a27e199c5830", "patch": { "type": "Program", "body": [{ "type": "ExpressionStatement", "expression": { "type": "Literal", "value": {}, "raw": "/[0-9]{0,256}['a-z\\u00A0-\\u05FF\\u0700-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF]{1,256}|[\\u0600-\\u06FF\\/]{1,256}(\\s*?[\\u0600-\\u06FF]{1,256}){1,2}/i", "regex": { "pattern": "[0-9]{0,256}['a-z\\u00A0-\\u05FF\\u0700-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF]{1,256}|[\\u0600-\\u06FF\\/]{1,256}(\\s*?[\\u0600-\\u06FF]{1,256}){1,2}", "flags": "i" } } }] } };
+patches["882742bd8a389619b1df44176377133edad5e327"] = { "type": "Literal", "value": {}, "raw": "/[0-9]{0,256}['a-z\\u00A0-\\u05FF\\u0700-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF]{1,256}|[\\u0600-\\u06FF\\/]{1,256}(\\s*?[\\u0600-\\u06FF]{1,256}){1,2}/i", "regex": { "pattern": "[0-9]{0,256}['a-z\\u00A0-\\u05FF\\u0700-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF]{1,256}|[\\u0600-\\u06FF\\/]{1,256}(\\s*?[\\u0600-\\u06FF]{1,256}){1,2}", "flags": "i" } };
 
 
 

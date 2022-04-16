@@ -12,12 +12,10 @@ function refresh() {
         });
     }
 
-    let mode = 'repair';
+    let mode = 'analyze';
 
     chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
         mode = data.js_vulnerability_detector__mode;
-        console.log('receiving data ' + mode);
-        console.log(mode);
         rad.value = mode;
     });
 
