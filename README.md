@@ -11,7 +11,7 @@ Chrome extension application written as Node application using Extension CLI (ht
 The extension is published to Chrome Webstore https://chrome.google.com/webstore/detail/js-vulnerability-detector/bmcojnncgfmglejiinbdnahmkmbgifhk
 
 ### Modes
-Extension runs in three different modes:
+Extension runs in four different modes:
 
 0. Disabled - Extension is enabled, but not active.
 1. Analyze - Functionality of the web is not affected. Scripts are asynchronously analyzed without impacting the page.
