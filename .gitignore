@@ -4,3 +4,4 @@ release*
 tmp/
 broken/
 fixed/
+.DS_Store
