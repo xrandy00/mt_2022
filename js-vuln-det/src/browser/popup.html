@@ -1,18 +1,22 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
 </head>
 
 <body>
-    <h3>JavaScript Vulnerability Detector</h3>
+
+    <h4>
+        <img src="assets/icon.png" height="56" width="56">
+        JavaScript Vulnerability Detector
+    </h4>
 
     <div class="tab">
         <button class="tablinks" id="historySelectionButton">History</button>
         <button class="tablinks" id="modeSelectionButton">Mode</button>
-        <button class="tablinks" id="webCrawlButton">Web Crawl</button>
 
     </div>
 
@@ -34,7 +38,9 @@
     <div id="History" class="tabcontent">
         <h3>History</h3>
         <div>
-            <label>Total count:</label> <span id="totalCount"></span>
+            <label>Processed scripts:</label> <span id="processedScriptsCount"></span> <br>
+            <label>Vulnerable scripts found:</label> <span id="vulnerableScriptsFound"></span> <br>
+            <label>Vulnerabilities identified:</label> <span id="vulnerabilitiesCount"></span>
         </div>
 
         <button class="button button-red" id="clear">Clear</button>
@@ -45,16 +51,7 @@
 
     </div>
 
-    <div id="WebCrawl" class="tabcontent">
-        <h3>Crawl sites from top 1Mil sites</h3>
-        Start at: <input type="number" id="startAt"><br>
-        End at: <input type="number" id="endAt"><br>
-        <button class="button button-red" id="crawl">Start crawling</button>
-        <p id="crawlCount"></p>
-    </div>
-
     <script src="popup.js"></script>
-
 </body>
 
 </html>

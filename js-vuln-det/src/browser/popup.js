@@ -1,5 +1,3 @@
-import crawl from "./crawl";
-
 function refresh() {
     let rad = document.modeForm.mode;
     let prev = null;
@@ -16,6 +14,11 @@ function refresh() {
 
     chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
         mode = data.js_vulnerability_detector__mode;
+
+        if (!mode) {
+            mode == 'analyze';
+            rad[1].checked = true;
+        }
         rad.value = mode;
     });
 
@@ -46,27 +49,33 @@ function refresh() {
 
     document.getElementById("historySelectionButton").click();
     document.getElementById("clear").addEventListener("click", (event) => {
-        chrome.storage.local.set({ "count": 0 }, function () { });
+        chrome.storage.local.set({ "vulnerableScriptsCount": 0 }, function () { });
+        chrome.storage.local.set({ "vulnerabilitiesCount": 0 }, function () { });
+        chrome.storage.local.set({ "processedScriptsCount": 0 }, function () { });
         chrome.storage.local.set({ "vulnerabilities": [] }, function () { });
 
         refresh();
     });
 
-    document.getElementById("crawl").addEventListener("click", (event) => {
-        let startAt = document.getElementById("startAt").value;
-        let endAt = document.getElementById("endAt").value;
-
-        if (startAt && endAt) {
-            console.log('crawling', startAt, endAt);
-            crawl(startAt, endAt);
+    chrome.storage.local.get("vulnerableScriptsCount", function (received) {
+        if (!received.vulnerableScriptsCount) {
+            received.vulnerableScriptsCount = 0;
         }
+        document.getElementById("vulnerableScriptsFound").innerText = received.vulnerableScriptsCount;
     });
 
-    chrome.storage.local.get("count", function (received) {
-        if (!received.count) {
-            received.count = 0;
+    chrome.storage.local.get("vulnerabilitiesCount", function (received) {
+        if (!received.vulnerabilitiesCount) {
+            received.vulnerabilitiesCount = 0;
         }
-        document.getElementById("totalCount").innerText = received.count;
+        document.getElementById("vulnerabilitiesCount").innerText = received.vulnerabilitiesCount;
+    });
+
+    chrome.storage.local.get("processedScriptsCount", function (received) {
+        if (!received.processedScriptsCount) {
+            received.processedScriptsCount = 0;
+        }
+        document.getElementById("processedScriptsCount").innerText = received.processedScriptsCount;
     });
 
     let list = document.getElementById("vulnerabilitiesList");
@@ -94,6 +103,8 @@ function vulnerabilityToHtml(vulnerability, index) {
         <span class="vulnerability-item-title">${vulnerability.title}</span>
         <br>
         <a href="${vulnerability.url}">${vulnerability.url}</a>
+        <span>${vulnerability.src}</span>
+
     </div>`;
 }
 

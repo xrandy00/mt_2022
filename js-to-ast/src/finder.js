@@ -14,6 +14,17 @@ function tryParse(code) {
     }
 }
 
+function replaceReferencedObj(refObj, newObj) {
+    let keysR = Object.keys(refObj);
+    let keysN = Object.keys(newObj);
+    for (let i = 0; i < keysR.length; i++) {
+        delete refObj[keysR[i]];
+    }
+    for (let i = 0; i < keysN.length; i++) {
+        refObj[keysN[i]] = newObj[keysN[i]];
+    }
+}
+
 function findMatches(input, vulnerabilities, patches, meta) {
     const ast = tryParse(input);
     if (ast == false) return false;
@@ -43,9 +54,10 @@ function findMatches(input, vulnerabilities, patches, meta) {
 
     if (foundVulnerabilities.length > 0) {
         const output = escodegen.generate(ast);
-        return [foundVulnerabilities, output];
+        return {foundVulnerabilities: foundVulnerabilities, output: output};
     }
-    return [foundVulnerabilities, input];
+
+    return {foundVulnerabilities: foundVulnerabilities, output: input};
 }
 
 function deepEqual(object1, object2) {

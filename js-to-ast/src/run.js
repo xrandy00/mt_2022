@@ -568,5 +568,6 @@ function processScript(input) {
 module.exports = {
     processScript,
     vulnerabilities,
-    patches
+    patches,
+    meta
 }

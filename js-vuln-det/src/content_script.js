@@ -13,9 +13,18 @@ class Mode {
 let domain = (new URL(window.location.href));
 domain = domain.hostname.replace('www.', '');
 
-chrome.storage.sync.get('js_vulnerability_detector__mode', function(data) {
+const whitelist = [
+    'google.com', // google itself works, but searching in chrome searchbar is broken - infinite redirects happen
+];
+
+chrome.storage.sync.get('js_vulnerability_detector__mode', function (data) {
     let modeString = data.js_vulnerability_detector__mode;
-    const mode = modeString != null ? new Mode(modeString) : Mode.Repair;
+    const mode = modeString != null ? new Mode(modeString) : Mode.Analyze;
+
+    if (whitelist.includes(domain)) {
+        mode = Mode.Analyze;
+    }
+
     switch (mode.name) {
         case Mode.Disabled.name:
             break;
@@ -41,11 +50,11 @@ function processPage(mode) {
 
     xhr.open('GET', window.location.href, false);
 
-    xhr.onerror = function() {
+    xhr.onerror = function () {
         document.documentElement.innerHTML = 'Error getting Page, try desabling the extension and reload the page';
     }
 
-    xhr.onload = async function() {
+    xhr.onload = async function () {
         const page = document.implementation.createHTMLDocument("");
         page.documentElement.innerHTML = this.responseText;
 
@@ -76,10 +85,10 @@ function processPage(mode) {
 
             if (processedScriptResponse) {
                 count++;
-                for (let i = 0; i < processedScriptResponse[0].length; i++) {
-                    const vuln = processedScriptResponse[0][i];
-                    vuln.src = `${node.src} ${i}` ?? `inline script ${i}`;    
-                    vulnerabilities.push(vuln);                
+                for (let i = 0; i < processedScriptResponse.foundVulnerabilities.length; i++) {
+                    const vuln = processedScriptResponse.foundVulnerabilities[i];
+                    vuln.src = node.src ?? `inline script ${i}`;
+                    vulnerabilities.push(vuln);
                 }
 
                 if (mode != Mode.Analyze.name) {
@@ -90,13 +99,19 @@ function processPage(mode) {
                     } else {
                         // in Repair mode add new repaired content to the node innerHTML
                         node.removeAttribute('src');
-                        node.innerHTML = processedScriptResponse[1];
+                        node.innerHTML = processedScriptResponse.output;
                     }
                 }
             }
         }
 
-        chrome.runtime.sendMessage({ count: count, vulnerabilities: vulnerabilities, url: location.href, type: "result" }, () => {});
+        chrome.runtime.sendMessage({
+            vulnerableScriptsCount: count,
+            processedScriptsCount: processedScripts.length,
+            vulnerabilities: vulnerabilities,
+            url: location.href,
+            type: "result"
+        }, () => { });
 
 
         if (mode != Mode.Analyze.name) {

@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener(
                 if (request.src != null) {
                     makeRequest(request.src).then((script) => {
                         let response = jsToAst.processScript(script);
-                        if (response && response.length == 2 && response[0]?.length > 0) {
+                        if (response && response.foundVulnerabilities?.length > 0) {
                             sendResponse(response);
                         } else {
                             sendResponse(null);
@@ -20,7 +20,7 @@ chrome.runtime.onMessage.addListener(
                     if (request.script != null) {
                         let response = jsToAst.processScript(request.script);
 
-                        if (response && response.length == 2 && response[0]?.length > 0) {
+                        if (response && response.foundVulnerabilities?.length > 0) {
                             sendResponse(response);
                         } else {
                             sendResponse(null);
@@ -28,13 +28,13 @@ chrome.runtime.onMessage.addListener(
                     }
             }
             else if (request.type == "result") {
-                if (request.count > 0) {
-                    chrome.action.setBadgeText({ text: request.count.toString() });
+                if (request.vulnerabilities.length > 0) {
+                    chrome.action.setBadgeText({ text: request.vulnerabilities.length.toString() });
                 } else {
                     chrome.action.setBadgeText({ text: '' });
                 }
 
-                addToTotalCount(request.count);
+                addToTotalCount(request.vulnerableScriptsCount, request.vulnerabilities.length, request.processedScriptsCount);
                 addToHistory(request.vulnerabilities, request.url);
 
                 sendResponse(true);
@@ -57,14 +57,31 @@ async function makeRequest(url) {
     }
 }
 
-function addToTotalCount(count) {
+
+function addToTotalCount(vulnerableScriptsCount, vulnerabilitiesCount, processedScriptsCount ) {
     try {
-        chrome.storage.local.get("count", function (received) {
-            if (received.count > 0) {
-                count += received.count;
+        chrome.storage.local.get("vulnerableScriptsCount", function (received) {
+            if (received.vulnerableScriptsCount > 0) {
+                vulnerableScriptsCount += received.vulnerableScriptsCount;
             }
 
-            chrome.storage.local.set({ "count": count }, function () { });
+            chrome.storage.local.set({ "vulnerableScriptsCount": vulnerableScriptsCount }, function () { });
+        });
+
+        chrome.storage.local.get("vulnerabilitiesCount", function (received) {
+            if (received.vulnerabilitiesCount > 0) {
+                vulnerabilitiesCount += received.vulnerabilitiesCount;
+            }
+
+            chrome.storage.local.set({ "vulnerabilitiesCount": vulnerabilitiesCount }, function () { });
+        });
+
+        chrome.storage.local.get("processedScriptsCount", function (received) {
+            if (received.processedScriptsCount > 0) {
+                processedScriptsCount += received.processedScriptsCount;
+            }
+
+            chrome.storage.local.set({ "processedScriptsCount": processedScriptsCount }, function () { });
         });
     } catch (error) {
         console.log(error);
@@ -73,6 +90,11 @@ function addToTotalCount(count) {
 
 function addToHistory(vulnerabilities, url) {
     try {
+        for (let i = 0; i < vulnerabilities.length; i++) {
+            const vulnerability = vulnerabilities[i];
+            vulnerability.url = url;
+        }
+
         chrome.storage.local.get("vulnerabilities", function (received) {
             if (!received.vulnerabilities) {
                 chrome.storage.local.set({ "vulnerabilities": vulnerabilities }, function () { });

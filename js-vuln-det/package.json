@@ -55,9 +55,7 @@
             {
                 "name": "popup",
                 "src": [
-                    "./src/browser/popup.js",
-                    "./src/browser/sites_list.js",
-                    "./src/browser/crawl.js"
+                    "./src/browser/popup.js"
                 ]
             }
         ],

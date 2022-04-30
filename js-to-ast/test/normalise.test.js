@@ -36,3 +36,22 @@ test("Variable declaration merging", () => {
 
     expect(stringified1).toBe(stringified2);
 });
+
+test("Variable declaration test", () => {
+    const input1 = `
+    var a  = "hello";
+    var b  = 'world';
+    `;
+
+    const input2 = `
+    var a="hello",b="world";
+    `;
+
+    let parsed1 = sut.tryParse(input1);
+    let parsed2 = sut.tryParse(input2);
+
+    let stringified1 = stringifyAndClean(parsed1);
+    let stringified2 = stringifyAndClean(parsed2);
+
+    expect(stringified1).toBe(stringified2);
+});

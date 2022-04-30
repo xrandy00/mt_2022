@@ -1,9 +1,9 @@
 {
     "appName": {
-        "message": "js_vuln_det"
+        "message": "JS Vulnerability Detector"
     },
     "appShortName": {
-        "message": "js_vuln_det"
+        "message": "JS Vuln. Det."
     },
     "appDescription": {
         "message": ""

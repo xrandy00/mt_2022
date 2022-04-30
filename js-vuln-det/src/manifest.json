@@ -20,17 +20,13 @@
         "<all_urls>"
     ],
     "permissions": [
-        "activeTab",
-        "storage",
-        "tabs"
+        "storage"
     ],
     "web_accessible_resources": [
         {
             "resources": [
                 "evaluate.js",
-                "popup.js",
-                "sites.js",
-                "crawl.js"
+                "popup.js"
             ],
             "matches": [
                 "<all_urls>"
