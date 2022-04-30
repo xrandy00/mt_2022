@@ -1,30 +1,18 @@
 # Detecting JavaScript Code with Known Vulnerabilites
-Detekce kódu v jazyce JavaScript se známými bezpečnostními chybami
-
+This repository contains the output and notes for my Master Thesis on Brno University of Technology, graduation year 2022. The goal is to create a Chrome Extension with ability to detect JavaScript with known vulnerabilities. Overall, the goal was accomplished.
 ## js-to-ast
 Node application for detecting known JavaScript code in input script. It internally uses Acorn and EsCodeGen libraries to parse the JavaScript code into AST, analyze it and rebuild it back into the form of a script.
 
-Currently contains a hardcoded list of known vulnerabilities. For testing purposes they are just:
-
-    console.log("Hello World!");
-
-which is fixed to:
-
-    console.log("Hello World Fixed!");
-
-And
-
-    const parsedData = JSON.parse(data);
-
-which is fixed to:
-
-    const parsedData = JSON.stringify(data);
+List of known vulnerabilities, patches and metadata are in files generated_vulnerabilities.json, generated_vulnerabilities_meta.json ad generated_patches.json.
 
 ## js-vuln-det
 Chrome extension application written as Node application using Extension CLI (https://oss.mobilefirst.me/extension-cli/) and Webpack. Node is chosen so that js-to-ast can be easily referenced. Extension is written in Manifest V3 standard, as older Manifest V2 is no longer supported.
 
+The extension is published to Chrome Webstore https://chrome.google.com/webstore/detail/js-vulnerability-detector/bmcojnncgfmglejiinbdnahmkmbgifhk
+
 ### Modes
 Extension runs in three different modes:
+
 0. Disabled - Extension is enabled, but not active.
 1. Analyze - Functionality of the web is not affected. Scripts are asynchronously analyzed without impacting the page.
 2. Block - If a script is considered vulnerable, it is removed from the website, which may break the page.
@@ -43,22 +31,17 @@ During initial testing some pages were broken by the core principles of the exte
 Probably not needed anymore - the race condition on load was added, to easier support disabled and analysis modes.
 
 ## test-web
-Simple website containing an inline script and a script reference via src attribute. Purpose of this web, which will become more complex in future, is to test and verify rest of the tools.
+Simple website for demonstration of extension functionality. It includes some of the vulnerable scripts detectable by the extension. Currently the website is hosted at
+https://www.stud.fit.vutbr.cz/~xrandy00
 
 ## Contributing
 No contributing allowed.
 
-## Vulnerabilities
-https://github.com/advisories/GHSA-9q5w-79cv-947m \
-https://www.npmjs.com/package/remark-html\
-https://github.com/remarkjs/remark-html/commit/b75c9dde582ad87ba498e369c033dc8a350478c1
-
-Possible to use https://astexplorer.net/ or js-to-ast/src/showAst to generate AST + https://www.freeformatter.com/javascript-escape.html#ad-output to esacpe the input
 ## TODO
 There is still lots of work to be done, mainly:
 - [x] Reporting of found vulnerabilities
 - [x] Use real vulnerabilities
-- [ ] Code style - cleanup, optimizations
+- [x] Code style - cleanup, optimizations
 - [x] Minification analysis/support - what is needed to analyze minified code as well? Add support for *equivalence classes* of ASTs. Such as 
     
         "Hello World" == 'Hello World' 
@@ -67,10 +50,10 @@ There is still lots of work to be done, mainly:
         let b = 2;
         ==
         let a=1,b=2;
-This is probably too complex, just add minified builds of libraries (like jQuery) to Vulnerabilities.json
-- [x] Normalizace - inspire in plagiat detection
-- [ ] Testing
+This is probably too complex, just add minified builds of libraries (like jQuery)
+- [x] Normalization - perform some optimizations on the AST before processing it
+- [x] Testing - unit tests and web crawl were done
 - [ ] Manually creating Vulnerabilities.json for all known npm vulnerabilities (== 2k+)
-- [ ] Release extension to store
-- [x] Performance measurement
+- [x] Release extension to store
+- [x] Performance measurement - done, structure of data was modified based on the findings
 
