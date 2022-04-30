@@ -45,7 +45,6 @@ function refresh() {
 
     document.getElementById("modeSelectionButton").addEventListener("click", (event) => { openTab(event, 'Mode'); });
     document.getElementById("historySelectionButton").addEventListener("click", (event) => { openTab(event, 'History'); });
-    document.getElementById("webCrawlButton").addEventListener("click", (event) => { openTab(event, 'WebCrawl'); });
 
     document.getElementById("historySelectionButton").click();
     document.getElementById("clear").addEventListener("click", (event) => {
