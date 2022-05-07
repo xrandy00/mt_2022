@@ -1,7 +1,8 @@
 {
   "name": "js-to-ast",
+  "type": "module",
   "version": "1.0.0",
-  "description": "Skript, který vstupní JS převede na AST\r 1. prozkoumat existující knihovny",
+  "description": "Node.js library for processing JS code, converting it to AST and finding known vulnerabilities in it",
   "main": "src/run.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

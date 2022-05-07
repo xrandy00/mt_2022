@@ -1,3 +1,20 @@
+/**
+ * After page DOM is injected at the end of content.js script, the repaired
+ * scripts are not executed on their own. A little hack is needed - all of
+ * the scripts need to be one by one removed from the loaded DOM and returned.
+ * This operation causes the browser to execute the scripts. That is all just 
+ * to keep the original page as functional as possible.
+ *
+ * @summary Script responsible for executing all scripts on the page
+ * @author https://www.demo2s.com/javascript/javascript-dom-replace-dom-and-run-new-scripts.html
+ *
+ * Created at     : 2022-05-06 22:03:35 
+ * Last modified  : 2022-05-07 11:01:51
+ */
+
+// taken from https://www.demo2s.com/javascript/javascript-dom-replace-dom-and-run-new-scripts.html
+// originally I had an implementation using eval() here, but this solution seems to work better,
+// eval was often failing
 function runScripts(element) {
   let list, scripts, index;
 

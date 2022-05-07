@@ -5,3 +5,4 @@ tmp/
 broken/
 fixed/
 .DS_Store
+crawl-processing/

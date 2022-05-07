@@ -1,3 +1,13 @@
+/**
+ *
+ * @summary Unit test file for functionality related to normalisation of AST
+ * @author Vojtěch Randýsek, xrandy00@vutbr.cz
+ *
+ * Created at     : 2022-05-06 21:37:21 
+ * Last modified  : 2022-05-06 21:37:38
+ */
+
+
 const sut = require("../src/finder");
 
 function stringifyAndClean(ast) {

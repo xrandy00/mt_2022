@@ -1,3 +1,13 @@
+/**
+ *
+ * @summary Script for running performance test
+ * @author Vojtěch Randýsek, xrandy00@vutbr.cz
+ *
+ * Created at     : 2022-05-06 21:37:45 
+ * Last modified  : 2022-05-06 21:38:06
+ */
+
+
 const sut = require("../src/finder");
 const run = require("../src/run");
 

@@ -1,3 +1,14 @@
+/**
+ *
+ * @summary Unit test file for e2e detection
+ * @author Vojtěch Randýsek, xrandy00@vutbr.cz
+ *
+ * Created at     : 2022-05-06 21:36:42 
+ * Last modified  : 2022-05-06 21:37:12
+ */
+
+
+
 const sut = require("../src/finder");
 const run = require("../src/run");
 

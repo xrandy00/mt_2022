@@ -1,4 +1,16 @@
+/**
+ * Main responsibilities of this script are to set callbacks for UI elements in popup.html and
+ * load initial data from storage.
+ *
+ * @summary Background code for the popup
+ * @author Vojtěch Randýsek, xrandy00@vutbr.cz
+ *
+ * Created at     : 2022-05-06 21:51:46 
+ * Last modified  : 2022-05-07 10:49:27
+ */
+
 function refresh() {
+    // setup mode selection callbacks
     let rad = document.modeForm.mode;
     let prev = null;
     for (let i = 0; i < rad.length; i++) {
@@ -16,12 +28,17 @@ function refresh() {
         mode = data.js_vulnerability_detector__mode;
 
         if (!mode) {
-            mode == 'analyze';
+            // after fresh installation of the extension there is no mode selected and stored
+            // select analyze mode, check the radio button and store the value
+            mode = 'analyze';
             rad[1].checked = true;
+            chrome.storage.sync.set({ js_vulnerability_detector__mode: 'analyze' });
+
         }
         rad.value = mode;
     });
 
+    // originally taken from https://www.w3schools.com/howto/howto_js_tabs.asp
     function openTab(evt, tabName) {
         // Declare all variables
         let i, tabcontent, tablinks;
@@ -43,19 +60,24 @@ function refresh() {
         evt.currentTarget.className += " active";
     }
 
+    // callbacks for tab selection
     document.getElementById("modeSelectionButton").addEventListener("click", (event) => { openTab(event, 'Mode'); });
     document.getElementById("historySelectionButton").addEventListener("click", (event) => { openTab(event, 'History'); });
 
+    // callbacks for buttons
     document.getElementById("historySelectionButton").click();
     document.getElementById("clear").addEventListener("click", (event) => {
         chrome.storage.local.set({ "vulnerableScriptsCount": 0 }, function () { });
         chrome.storage.local.set({ "vulnerabilitiesCount": 0 }, function () { });
         chrome.storage.local.set({ "processedScriptsCount": 0 }, function () { });
         chrome.storage.local.set({ "vulnerabilities": [] }, function () { });
-
+        
+        // make sure to refresh the page after clear - otherwise the vulnerabilities would still be visible in the popup,
+        // even if they are no longer in storage
         refresh();
     });
 
+    // load data on start
     chrome.storage.local.get("vulnerableScriptsCount", function (received) {
         if (!received.vulnerableScriptsCount) {
             received.vulnerableScriptsCount = 0;

@@ -1,5 +1,15 @@
-const finder = require("./finder");
+/**
+ * Main responsibilities are merging generated vulnerabilities with manually created ones
+ * and calling finder functions.
+ *
+ * @summary Entry point of the library 
+ * @author Vojtěch Randýsek, xrandy00@vutbr.cz
+ *
+ * Created at     : 2022-05-07 10:39:20 
+ * Last modified  : 2022-05-07 10:40:42
+ */
 
+const finder = require("./finder");
 const vulnerabilities = require('./generated_vulnerabilities.json');
 const meta = require('./generated_vulnerabilities_meta.json');
 const patches = require('./generated_patches.json');
