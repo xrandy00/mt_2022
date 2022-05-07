@@ -6,7 +6,7 @@
  * @author Vojtěch Randýsek, xrandy00@vutbr.cz
  *
  * Created at     : 2022-05-07 10:39:20 
- * Last modified  : 2022-05-07 10:40:42
+ * Last modified  : 2022-05-07 11:22:25
  */
 
 const finder = require("./finder");

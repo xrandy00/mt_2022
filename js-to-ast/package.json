@@ -1,6 +1,5 @@
 {
   "name": "js-to-ast",
-  "type": "module",
   "version": "1.0.0",
   "description": "Node.js library for processing JS code, converting it to AST and finding known vulnerabilities in it",
   "main": "src/run.js",
