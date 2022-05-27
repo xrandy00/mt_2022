@@ -6,7 +6,7 @@
  * @author Vojtěch Randýsek, xrandy00@vutbr.cz
  *
  * Created at     : 2022-05-07 10:39:20 
- * Last modified  : 2022-05-07 11:22:25
+ * Last modified  : 2022-05-08 21:42:46
  */
 
 const finder = require("./finder");
@@ -88,7 +88,6 @@ meta["5"] = {
     "reference_url": "https://github.com/advisories/GHSA-6c3j-c64m-qhgq",
     "severity": 2,
 };
-
 
 patches["4f8df2f6113fc55ac56e9db43f0ee240"] = {
     "type": "Literal",
@@ -564,8 +563,6 @@ patches["5c8cef7506ef500b0a0ad03e752d5901b91777f2"] =
     "type": "Literal", "value": {}, "raw": "/[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/", "regex": { "pattern": "[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]", "flags": "" }
 };
 patches["882742bd8a389619b1df44176377133edad5e327"] = { "type": "Literal", "value": {}, "raw": "/[0-9]{0,256}['a-z\\u00A0-\\u05FF\\u0700-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF]{1,256}|[\\u0600-\\u06FF\\/]{1,256}(\\s*?[\\u0600-\\u06FF]{1,256}){1,2}/i", "regex": { "pattern": "[0-9]{0,256}['a-z\\u00A0-\\u05FF\\u0700-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF]{1,256}|[\\u0600-\\u06FF\\/]{1,256}(\\s*?[\\u0600-\\u06FF]{1,256}){1,2}", "flags": "i" } };
-
-
 
 function processScript(input) {
     try {
